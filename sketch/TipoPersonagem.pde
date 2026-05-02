@@ -1,6 +1,6 @@
 public abstract class TipoPersonagem {
-  protected int id;
-  protected String nome;
+  private int id;
+  private String nome;
 
   public int get_id() { return id; }
   public String get_nome() { return nome; }
