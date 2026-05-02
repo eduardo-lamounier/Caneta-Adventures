@@ -3,16 +3,19 @@ public abstract class Habilidade {
   private String nome;
   private boolean altera_vel;
   private int cooldown; // Cooldown quando o ataque é utilizado
-  protected int cooldown_atual;
+  private int cooldown_atual;
   
   public int get_id() { return id; }
   public String get_nome() { return nome; }
   public int get_cooldown() { return cooldown_atual; }
+  
   public boolean altera_velocidade() { return altera_vel; }
+  
   public void decrementar_cooldown() {
     assert(cooldown_atual > 0);
     cooldown_atual--;
   }
+  
   public void entrar_em_cooldown() { cooldown_atual = cooldown; }
   
   protected abstract void uso(Personagem usuario, Personagem alvo);
