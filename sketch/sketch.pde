@@ -1,4 +1,4 @@
-int[][] grid;
+PImage[][] grid;
 int n = 11;
 int linha = 0;
 int coluna = 1;
@@ -7,6 +7,13 @@ void setup(){
   size(800,800);
   frameRate(60);
   
+  grid = new PImage[n][n];
+  
+  for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+      grid[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+    }
+  }
 }
 
 void keyPressed(){
@@ -57,7 +64,7 @@ void mostraGrid(){
     for(int j = 0; j < n; j++){
       stroke(200);
       fill(255,255,255);
-      rect(j*l, i*h, l, h);
+      image(grid[i][j], j*l, i*h, l, h);
     }
   }
   
