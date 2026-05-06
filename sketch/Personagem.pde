@@ -8,7 +8,7 @@ public abstract class Personagem {
   protected Habilidade[] habilidades;
   
   public float get_vida_atual() { return vida_atual; }
-  public float get_vel() { return vel; }
+  public int get_vel() { return vel; }
   public float get_atk() { return atk; }
   
   public boolean esta_vivo() { return vida_atual > 0; }
@@ -17,7 +17,7 @@ public abstract class Personagem {
     vida_atual = max(0, vida_atual - dano);
   }
   
-  public void incrementar_vel(float incremento) {
+  public void incrementar_vel(int incremento) {
     assert(vel + incremento > 0);
     vel += incremento;
   }
