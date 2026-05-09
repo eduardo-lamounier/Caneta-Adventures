@@ -1,10 +1,11 @@
 enum Celula {grama, pedra, heroi, inimigo};
 Celula[][] quadrado;
+
 PImage[][] grid; 
 int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
-int linha = 0; // Linha onde o héroi surge
-int coluna = 1; // Coluna onde o heroi surge
+int linha = 14; // Linha onde o héroi surge
+int coluna = 10; // Coluna onde o heroi surge
 
 void setup(){
   size(800,600);
@@ -61,12 +62,14 @@ void personagem(){
   float l = width/(float)m;
   float h = height/(float)n;
   
+  PImage heroi = loadImage("Heroi_de_costas.png");
+  
   fill(8,123,5);
-  rect(coluna * l, linha * h, l, h);
+  image(heroi, coluna * l, linha * h, l, h);
 }
 
 void atualizarGrid(){
- 
+  
 }
 
 void mostraGrid(){
