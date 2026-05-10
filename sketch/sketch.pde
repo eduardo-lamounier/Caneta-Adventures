@@ -25,25 +25,25 @@ void keyPressed(){
   if(key == 'w'){
     
     if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
-        linha += - 1; 
+        linha = atualizaGrid(linha, coluna, -1, true); 
     }
     
   } else if (key == 'a'){
   
     if(coluna > 0  && grid[linha][coluna - 1] == Celula.GRAMA){
-      coluna += -1;
+      coluna = atualizaGrid(linha, coluna, -1, false);
     }
     
   } else if (key == 's'){
     
     if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
-      linha += 1;
+      linha = atualizaGrid(linha, coluna, 1, true);
     }
     
   } else if (key == 'd'){
     
     if(coluna < m-1  && grid[linha][coluna + 1] == Celula.GRAMA){
-      coluna += 1;
+      coluna = atualizaGrid(linha, coluna, 1, false);
     }
     
   }
@@ -111,18 +111,20 @@ void inicializaGrid(){
   }
 }
 
-void atualizaGrid(int linha, int coluna, int distancia, boolean mudarLinha){
+int atualizaGrid(int linha, int coluna, int distancia, boolean mudarLinha){
   Celula temp = grid[linha][coluna];
   
   if(mudarLinha){
     grid[linha][coluna] = grid[linha + distancia][coluna];
     grid[linha + distancia][coluna] = temp;
     
-    return; 
+    return linha + distancia;
   }
   
   grid[linha][coluna] = grid[linha][coluna + distancia];
   grid[linha][coluna + distancia] = temp;
+  
+  return coluna + distancia;
 }
 
 void mostraGrid(){
