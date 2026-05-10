@@ -53,7 +53,7 @@ void desenhar_heroi(){
   float l = width/(float)m;
   float h = height/(float)n;
   
-  PImage heroi = loadImage("Heroi_de_costas.png");
+  PImage heroi = loadImage("Heroi_costas.png");
   
   image(heroi, coluna * l, linha * h, l, h);
 }
@@ -87,7 +87,7 @@ void inicializaGrid(){
       
       else {
         if(i != linha || j != coluna) {
-          gridImage[i][j] = loadImage("pedra.jpg");
+          gridImage[i][j] = loadImage("pedra.png");
           grid[i][j] = Celula.PEDRA;
           // TODO: Mudar a imagem da pedra
         }
