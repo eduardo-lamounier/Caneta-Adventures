@@ -7,7 +7,6 @@ int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
 int coluna = 10; // Coluna onde o heroi surge
 int quant_inimigo = 5; 
-int inimigos_restantes = quant_inimigo;
 int col_inimigo;
 int lin_inimigo;
 
@@ -16,6 +15,10 @@ void setup(){
   frameRate(60);
   
   inicializaGrid();
+}
+
+void draw(){
+  mostraGrid();
 }
 
 void keyPressed(){
@@ -77,31 +80,47 @@ void inicializaGrid(){
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
-      if(grid[i][j] != Celula.heroi) { 
-        if(random(1) >= 0.1){
-          gridImage[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
-          grid[i][j] = Celula.grama;
-        }
-        
-        else {
-        gridImage[i][j] = loadImage("pedra.jpg");
-        grid[i][j] = Celula.pedra;
-        // TODO: Mudar a imagem da pedra
+      if(random(1) >= 0.1){
+        gridImage[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+        grid[i][j] = Celula.grama;
+      }
+      
+      else {
+        if(grid[i][j] != grid[linha][coluna]) {
+          gridImage[i][j] = loadImage("pedra.jpg");
+          grid[i][j] = Celula.pedra;
+          // TODO: Mudar a imagem da pedra
         }
       }
     }                
   }
   
-  while(inimigos_restantes > 0){
+  grid[linha][coluna] = Celula.heroi;
+  
+  for(int i = quant_inimigo; i > 0; i--){
     int col_inimigo = int(random(m));
     int lin_inimigo = int(random(n));
     
-    if(grid[lin_inimigo][col_inimigo] == Celula.grama) {
-      grid[lin_inimigo][col_inimigo] = Celula.inimigo;
+    if(grid[lin_inimigo][col_inimigo] != Celula.grama) { 
+      i++; }  
     
-      inimigos_restantes--;
-    }  
+    else {
+      grid[lin_inimigo][col_inimigo] = Celula.inimigo; }
   }
+}
+
+void atualizaGrid(int linha, int coluna, int distancia, boolean mudarLinha){
+  Celula temp = grid[linha][coluna];
+  
+  if(mudarLinha){
+    grid[linha][coluna] = grid[linha + distancia][coluna];
+    grid[linha + distancia][coluna] = temp;
+    
+    return; 
+  }
+  
+  grid[linha][coluna] = grid[linha][coluna + distancia];
+  grid[linha][coluna + distancia] = temp;
 }
 
 void mostraGrid(){
@@ -118,9 +137,4 @@ void mostraGrid(){
   
   desenhar_heroi();  
   desenhar_inimigo();
-}
-
-
-void draw(){
-  mostraGrid();
 }
