@@ -1,7 +1,7 @@
-enum Celula {grama, pedra, inimigo};
-Celula[][] quadrado;
+enum Celula {grama, pedra, inimigo, heroi};
+Celula[][] grid;
 
-PImage[][] grid; 
+PImage[][] gridImage; 
 int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
@@ -21,25 +21,25 @@ void setup(){
 void keyPressed(){
   if(key == 'w'){
     
-    if(linha > 0 && quadrado[linha - 1][coluna] == Celula.grama){
+    if(linha > 0 && grid[linha - 1][coluna] == Celula.grama){
         linha += - 1; 
     }
     
   } else if (key == 'a'){
   
-    if(coluna > 0  && quadrado[linha][coluna - 1] == Celula.grama){
+    if(coluna > 0  && grid[linha][coluna - 1] == Celula.grama){
       coluna += -1;
     }
     
   } else if (key == 's'){
     
-    if(linha < n-1 && quadrado[linha + 1][coluna] == Celula.grama){
+    if(linha < n-1 && grid[linha + 1][coluna] == Celula.grama){
       linha += 1;
     }
     
   } else if (key == 'd'){
     
-    if(coluna < m-1  && quadrado[linha][coluna + 1] == Celula.grama){
+    if(coluna < m-1  && grid[linha][coluna + 1] == Celula.grama){
       coluna += 1;
     }
     
@@ -61,8 +61,7 @@ void desenhar_inimigo(){
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
-      
-      if(quadrado[i][j] == Celula.inimigo) {
+      if(grid[i][j] == Celula.inimigo) {
         fill(185, 22, 25);
         noStroke();
         rect(j * l, i * h, l, h);
@@ -73,30 +72,32 @@ void desenhar_inimigo(){
 }
 
 void inicializaGrid(){
-  grid = new PImage[n][m];
-  quadrado = new Celula[n][m];
+  gridImage = new PImage[n][m];
+  grid = new Celula[n][m];
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
-      if(random(1) >= 0.1){
-        grid[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
-        quadrado[i][j] = Celula.grama;
+      if(grid[i][j] != Celula.heroi) { 
+        if(random(1) >= 0.1){
+          gridImage[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+          grid[i][j] = Celula.grama;
+        }
+        
+        else {
+        gridImage[i][j] = loadImage("pedra.jpg");
+        grid[i][j] = Celula.pedra;
+        // TODO: Mudar a imagem da pedra
+        }
       }
-      
-      else {
-      grid[i][j] = loadImage("pedra.jpg");
-      quadrado[i][j] = Celula.pedra;
-      // TODO: Mudar a imagem da pedra
-      }
-    }
+    }                
   }
   
   while(inimigos_restantes > 0){
     int col_inimigo = int(random(m));
     int lin_inimigo = int(random(n));
     
-    if(quadrado[lin_inimigo][col_inimigo] == Celula.grama) {
-      quadrado[lin_inimigo][col_inimigo] = Celula.inimigo;
+    if(grid[lin_inimigo][col_inimigo] == Celula.grama) {
+      grid[lin_inimigo][col_inimigo] = Celula.inimigo;
     
       inimigos_restantes--;
     }  
@@ -111,7 +112,7 @@ void mostraGrid(){
     for(int j = 0; j < m; j++){
       stroke(200);
       fill(255,255,255);
-      image(grid[i][j], j*l, i*h, l, h);
+      image(gridImage[i][j], j*l, i*h, l, h);
     }
   }
   
