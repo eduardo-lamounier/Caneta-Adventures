@@ -1,7 +1,7 @@
-enum Celula {grama, pedra, inimigo, heroi};
+enum Celula {GRAMA, PEDRA, INIMIGO, HEROI};
 Celula[][] grid;
 
-PImage[][] gridImage; 
+PImage[][] gridImage;
 int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
@@ -24,25 +24,25 @@ void draw(){
 void keyPressed(){
   if(key == 'w'){
     
-    if(linha > 0 && grid[linha - 1][coluna] == Celula.grama){
+    if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
         linha += - 1; 
     }
     
   } else if (key == 'a'){
   
-    if(coluna > 0  && grid[linha][coluna - 1] == Celula.grama){
+    if(coluna > 0  && grid[linha][coluna - 1] == Celula.GRAMA){
       coluna += -1;
     }
     
   } else if (key == 's'){
     
-    if(linha < n-1 && grid[linha + 1][coluna] == Celula.grama){
+    if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
       linha += 1;
     }
     
   } else if (key == 'd'){
     
-    if(coluna < m-1  && grid[linha][coluna + 1] == Celula.grama){
+    if(coluna < m-1  && grid[linha][coluna + 1] == Celula.GRAMA){
       coluna += 1;
     }
     
@@ -64,7 +64,7 @@ void desenhar_inimigo(){
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
-      if(grid[i][j] == Celula.inimigo) {
+      if(grid[i][j] == Celula.INIMIGO) {
         fill(185, 22, 25);
         noStroke();
         rect(j * l, i * h, l, h);
@@ -82,30 +82,30 @@ void inicializaGrid(){
     for(int j = 0; j < m; j++) {
       if(random(1) >= 0.1){
         gridImage[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
-        grid[i][j] = Celula.grama;
+        grid[i][j] = Celula.GRAMA;
       }
       
       else {
         if(grid[i][j] != grid[linha][coluna]) {
           gridImage[i][j] = loadImage("pedra.jpg");
-          grid[i][j] = Celula.pedra;
+          grid[i][j] = Celula.PEDRA;
           // TODO: Mudar a imagem da pedra
         }
       }
     }                
   }
   
-  grid[linha][coluna] = Celula.heroi;
+  grid[linha][coluna] = Celula.HEROI;
   
   for(int i = quant_inimigo; i > 0; i--){
     int col_inimigo = int(random(m));
     int lin_inimigo = int(random(n));
     
-    if(grid[lin_inimigo][col_inimigo] != Celula.grama) { 
+    if(grid[lin_inimigo][col_inimigo] != Celula.GRAMA) { 
       i++; }  
     
     else {
-      grid[lin_inimigo][col_inimigo] = Celula.inimigo; }
+      grid[lin_inimigo][col_inimigo] = Celula.INIMIGO; }
   }
 }
 
