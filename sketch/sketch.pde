@@ -49,6 +49,57 @@ void keyPressed(){
   }
 }
 
+//void keyPressed(){
+//  switch(key) {
+//      case 'w':
+//        if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
+//        linha = atualizaGrid(linha, coluna, -1, true); }
+//        break;
+      
+//      case 'a':
+//        if(coluna > 0 && grid[linha][coluna - 1] == Celula.GRAMA){
+//        coluna = atualizaGrid(linha, coluna, -1, false); }
+//        break;
+      
+//      case 's':
+//        if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
+//        linha = atualizaGrid(linha, coluna, 1, true); }
+//        break;
+      
+//      case 'd':
+//        if(coluna < m-1 && grid[linha][coluna + 1] == Celula.GRAMA){
+//        coluna = atualizaGrid(linha, coluna, 1, false); }
+//        break;
+        
+//      default:
+//        break;
+//  } 
+//}
+
+void movimentar_heroi(){
+  switch(key) {
+    case 'w':
+      if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
+        linha = atualizaGrid(linha, coluna, -1, true); }
+      break;
+      
+    case 'a':
+      if(coluna > 0 && grid[linha][coluna - 1] == Celula.GRAMA){
+        coluna = atualizaGrid(linha, coluna, -1, false); }
+      break;
+      
+    case 's':
+      if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
+        linha = atualizaGrid(linha, coluna, 1, true); }
+      break;
+      
+    case 'd':
+      if(coluna < m-1 && grid[linha][coluna + 1] == Celula.GRAMA){
+        coluna = atualizaGrid(linha, coluna, 1, false); }
+      break;
+  }
+}
+
 void desenhar_heroi(){
   float l = width/(float)m;
   float h = height/(float)n;
