@@ -10,11 +10,15 @@ int quant_inimigo = 5;
 int col_inimigo;
 int lin_inimigo;
 
+Menu menu;
+boolean menu_aberto = true;
+
 void setup(){
   size(800,600);
   frameRate(60);
   
   inicializaGrid();
+  menu = new Menu();
 }
 
 void draw(){
@@ -22,30 +26,32 @@ void draw(){
 }
 
 void keyPressed(){
-  if(key == 'w'){
+  if(key == 'w' && !menu_aberto){
     
     if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
         linha = atualizaGrid(linha, coluna, -1, true); 
     }
     
-  } else if (key == 'a'){
+  } else if (key == 'a' && !menu_aberto){
   
     if(coluna > 0  && grid[linha][coluna - 1] == Celula.GRAMA){
       coluna = atualizaGrid(linha, coluna, -1, false);
     }
     
-  } else if (key == 's'){
+  } else if (key == 's' && !menu_aberto){
     
     if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
       linha = atualizaGrid(linha, coluna, 1, true);
     }
     
-  } else if (key == 'd'){
+  } else if (key == 'd' && !menu_aberto){
     
     if(coluna < m-1  && grid[linha][coluna + 1] == Celula.GRAMA){
       coluna = atualizaGrid(linha, coluna, 1, false);
     }
     
+  } else if (key == 'm' || key == 'M') {
+    menu_aberto = !menu_aberto;
   }
 }
 
@@ -141,4 +147,12 @@ void mostraGrid(){
   
   desenhar_heroi();  
   desenhar_inimigo();
+  
+  if(menu_aberto) {
+    menu.desenhar();
+    
+    if(menu.passarEstado()) {
+      menu_aberto = false;
+    }
+  }
 }
