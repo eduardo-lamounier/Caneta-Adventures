@@ -1,4 +1,4 @@
-class Menu{
+public class Menu{
   private PFont titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
   
   private color cor_iniciar = color(#6C350A);

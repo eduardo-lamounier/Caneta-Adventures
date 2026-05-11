@@ -25,62 +25,16 @@ void draw(){
   mostraGrid();
 }
 
+// exit()
 void keyPressed(){
-  if(key == 'w' && !menu_aberto){
-    
-    if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
-        linha = atualizaGrid(linha, coluna, -1, true); 
-    }
-    
-  } else if (key == 'a' && !menu_aberto){
+  if(!menu_aberto) { movimentar_heroi(); }
   
-    if(coluna > 0  && grid[linha][coluna - 1] == Celula.GRAMA){
-      coluna = atualizaGrid(linha, coluna, -1, false);
-    }
-    
-  } else if (key == 's' && !menu_aberto){
-    
-    if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
-      linha = atualizaGrid(linha, coluna, 1, true);
-    }
-    
-  } else if (key == 'd' && !menu_aberto){
-    
-    if(coluna < m-1  && grid[linha][coluna + 1] == Celula.GRAMA){
-      coluna = atualizaGrid(linha, coluna, 1, false);
-    }
-    
-  } else if (key == 'm' || key == 'M') {
-    menu_aberto = !menu_aberto;
+  switch(key) {
+    case 'm':
+    case 'M':
+      menu_aberto = !menu_aberto;
   }
 }
-
-//void keyPressed(){
-//  switch(key) {
-//      case 'w':
-//        if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
-//        linha = atualizaGrid(linha, coluna, -1, true); }
-//        break;
-      
-//      case 'a':
-//        if(coluna > 0 && grid[linha][coluna - 1] == Celula.GRAMA){
-//        coluna = atualizaGrid(linha, coluna, -1, false); }
-//        break;
-      
-//      case 's':
-//        if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
-//        linha = atualizaGrid(linha, coluna, 1, true); }
-//        break;
-      
-//      case 'd':
-//        if(coluna < m-1 && grid[linha][coluna + 1] == Celula.GRAMA){
-//        coluna = atualizaGrid(linha, coluna, 1, false); }
-//        break;
-        
-//      default:
-//        break;
-//  } 
-//}
 
 void movimentar_heroi(){
   switch(key) {
@@ -128,7 +82,6 @@ void desenhar_inimigo(){
       }
     }
   }  
-  // TODO: Arrumar isso, pois está feio para um caramba!
 }
 
 void inicializaGrid(){
@@ -146,7 +99,6 @@ void inicializaGrid(){
         if(i != linha || j != coluna) {
           gridImage[i][j] = loadImage("pedra.png");
           grid[i][j] = Celula.PEDRA;
-          // TODO: Mudar a imagem da pedra
         }
         
         else { j--; }
