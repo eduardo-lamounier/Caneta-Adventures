@@ -53,21 +53,21 @@ void desenhar_heroi(){
   float l = width/(float)m;
   float h = height/(float)n;
   
-  PImage heroi = loadImage("Heroi_costas.png");
+  PImage heroiImage = loadImage("Heroi_costas.png");
   
-  image(heroi, coluna * l, linha * h, l, h);
+  image(heroiImage, coluna * l, linha * h, l, h);
 }
 
 void desenhar_inimigo(){
   float l = width/(float)m;
   float h = height/(float)n;
   
+  PImage inimigoImage = loadImage("inimigo1.png");
+  
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
       if(grid[i][j] == Celula.INIMIGO) {
-        fill(185, 22, 25);
-        noStroke();
-        rect(j * l, i * h, l, h);
+        image(inimigoImage, j * l, i * h, l, h);
       }
     }
   }  
