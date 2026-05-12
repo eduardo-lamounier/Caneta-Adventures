@@ -41,11 +41,11 @@ public class Batalha {
   private boolean turno() {
     for(atacante_atual = 0; atacante_atual < 6; atacante_atual++) {
       Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
-       boolean personagem_atual_heroi =
-          personagem_fila_turnos_herois[atacante_atual];
+      boolean personagem_atual_heroi =
+        personagem_fila_turnos_herois[atacante_atual];
 
       Personagem[] oponentes = new Personagem[3];
-      int o = 0; // iterador dos oponentes
+      int o = 0; // Iterador dos oponentes
       
       // Busca os oponentes (de forma infelizmente nada funcional)
       for(int j = 0; j < 6; j++) {
@@ -63,7 +63,7 @@ public class Batalha {
       
       if(habilidade_escolhida.altera_velocidade())
         ordenar_fila();
-
+        
       // FALTA CHECAR PELO FIM DA BATALHA!!
     }
 
@@ -73,7 +73,7 @@ public class Batalha {
   public void desenhar() {
     if(estado_batalha == EstadoBatalha.NAO_INICIADA)
       return;
-
+    
     // IMPLEMENTAR DESENHO AQUI
     
     
