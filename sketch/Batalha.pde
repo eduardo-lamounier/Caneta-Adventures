@@ -16,8 +16,19 @@ public class Batalha {
   public int get_turno_atual() { return turno_atual; }
 
   private void ordenar_fila() {
-    // FALTA IMPLEMENTAR ORDENAÇÃO DA FILA!!
-  } 
+    for(int i = 0; i < 6; i++) {
+      Personagem personagem_rapido = fila_turnos[i];
+      for(int j = i + 1; j < 6; j++) {
+        if(fila_turnos[j].get_vel() > personagem_rapido.get_vel())
+          personagem_rapido = fila_turnos[j];
+        else if(fila_turnos[j].get_vel() == personagem_rapido.get_vel()) {
+          personagem_rapido = (int)random(0, 1+1) == 1 ? 
+            fila_turnos[j] : personagem_rapido;
+        }
+      }
+      fila_turnos[i] = personagem_rapido;
+    }
+  }
 
   // Executa os turnos de cada personagem e retorna se a batalha deve
   // ser finalizada (true) ou não (false)
