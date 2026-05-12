@@ -30,8 +30,8 @@ void keyPressed(){
   if(!menu_aberto) { movimentar_heroi(); }
   
   switch(key) {
-    case 'm':
-    case 'M':
+    case 'P':
+    case 'p':
       menu_aberto = !menu_aberto;
   }
 }
@@ -157,5 +157,7 @@ void mostraGrid(){
     if(menu.passarEstado()) {
       menu_aberto = false;
     }
+    
+    menu.sairJogo();
   }
 }
