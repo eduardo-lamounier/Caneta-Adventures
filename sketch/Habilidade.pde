@@ -34,5 +34,7 @@ public abstract class Habilidade {
     this.descricao = descricao;
     this.cooldown = cooldown;
     this.altera_vel = altera_vel;
+    
+    cooldown_atual = 0;
   }
 }
