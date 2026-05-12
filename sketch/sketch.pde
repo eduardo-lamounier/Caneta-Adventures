@@ -11,8 +11,8 @@ int linha = 14; // Linha onde o héroi surge
 int coluna = 10; // Coluna onde o heroi surge
 
 int quant_inimigo = 5;
-PosicaoDTO[] posInimigos; 
 PImage[] inimigoImage;
+PosicaoDTO[] posInimigos; 
 // Linhas e colunas onde os inimigos estão
 
 int ultimo_movimento = millis();
@@ -52,6 +52,11 @@ void draw(){
 
 // exit()
 void keyPressed(){
+  if(estado == Estado.MENU) { 
+    if(key == ' ') { estado = Estado.EXPLORACAO; }
+  }
+  
+  
   if(estado == Estado.EXPLORACAO) { movimentar_heroi(); }
   
   switch(key) {
