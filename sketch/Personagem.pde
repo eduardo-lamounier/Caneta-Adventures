@@ -23,7 +23,7 @@ public abstract class Personagem {
   }
   
   public abstract Habilidade escolher_habilidade();
-  public abstract Personagem escolher_alvo(Personagem[] alvos);
+  public abstract Personagem escolher_alvo(Personagem[] oponentes);
   
   public Personagem(int nivel, TipoPersonagem tipo_personagem) {
     this.tipo_personagem = tipo_personagem;
