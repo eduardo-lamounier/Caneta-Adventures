@@ -1,6 +1,7 @@
 public abstract class Habilidade {
   private int id;
   private String nome;
+  private String descricao;
   private boolean altera_vel;
   private int cooldown; // Cooldown quando o ataque é utilizado
   private int cooldown_atual;
@@ -27,9 +28,10 @@ public abstract class Habilidade {
     uso(usuario, alvo);
   }
   
-  public Habilidade(int id, String nome, int cooldown, boolean altera_vel) {
+  public Habilidade(int id, String nome, String descricao, int cooldown, boolean altera_vel) {
     this.id = id;
     this.nome = nome;
+    this.descricao = descricao;
     this.cooldown = cooldown;
     this.altera_vel = altera_vel;
   }
