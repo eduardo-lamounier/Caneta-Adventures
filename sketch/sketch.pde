@@ -72,21 +72,37 @@ void movimentar_heroi(){
       if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
         linha = atualizaGrid(linha, coluna, -1, true); }
         
+      else if(linha > 0 && grid[linha - 1][coluna] == Celula.INIMIGO){
+        colisao();
+      }
+        
       break;
       
     case 'a':
       if(coluna > 0 && grid[linha][coluna - 1] == Celula.GRAMA){
         coluna = atualizaGrid(linha, coluna, -1, false); }
+        
+      else if(coluna > 0 && grid[linha][coluna - 1] == Celula.INIMIGO){
+        colisao();
+      }
       break;
       
     case 's':
       if(linha < n-1 && grid[linha + 1][coluna] == Celula.GRAMA){
         linha = atualizaGrid(linha, coluna, 1, true); }
+        
+      else if(linha < n - 1 && grid[linha + 1][coluna] == Celula.INIMIGO){
+        colisao();
+      }
       break;
       
     case 'd':
       if(coluna < m-1 && grid[linha][coluna + 1] == Celula.GRAMA){
         coluna = atualizaGrid(linha, coluna, 1, false); }
+        
+      else if(linha < m - 1 && grid[linha][coluna + 1] == Celula.INIMIGO){
+        colisao();
+      }
       break;
   }
 }
@@ -101,21 +117,36 @@ void movimentar_inimigo(){
      case 0: // Movimento para cima
        if(int(posInimigos[i].x) > 0 && grid[int(posInimigos[i].x) - 1][int(posInimigos[i].y)] == Celula.GRAMA){
          posInimigos[i].x = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), -1, true); }
+       
+       else if(int(posInimigos[i].x) > 0 && grid[int(posInimigos[i].x) - 1][int(posInimigos[i].y)] == Celula.HEROI){
+         colisao();
+       }
        break;
        
      case 1: // movimento para a esquerda
        if(int(posInimigos[i].y) > 0 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) - 1] == Celula.GRAMA){
          posInimigos[i].y = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), -1, false); }
+         
+       else if(int(posInimigos[i].y) > 0 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) - 1] == Celula.HEROI) {
+         colisao();
+       }
        break;
      
      case 2: // movimento para baixo
        if(int(posInimigos[i].x) < n-1 && grid[int(posInimigos[i].x) + 1][int(posInimigos[i].y)] == Celula.GRAMA){
          posInimigos[i].x = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), 1, true); }
+         
+       else if(int(posInimigos[i].x) < n-1 && grid[int(posInimigos[i].x) + 1][int(posInimigos[i].y)] == Celula.HEROI) {
+        colisao(); }
        break;
      
      case 3: // movimento para direita
        if(int(posInimigos[i].y) < m-1 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) + 1] == Celula.GRAMA){
          posInimigos[i].y = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), 1, false); }
+         
+       else if(int(posInimigos[i].y) < m-1 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) + 1] == Celula.HEROI) {
+         colisao(); 
+       }
        break;
      
      default:
@@ -131,6 +162,10 @@ boolean podeMovimentar(){
   ultimo_movimento = millis();
   
   return true;
+}
+
+void colisao(){
+  estado = Estado.BATALHA;
 }
 
 void desenhar_heroi(){
