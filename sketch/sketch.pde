@@ -6,7 +6,10 @@ int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
 int coluna = 10; // Coluna onde o heroi surge
-int quant_inimigo = 5; 
+
+int quant_inimigo = 5;
+PosicaoDTO[] posInimigos; 
+// Linhas e colunas onde os inimigos estão
 
 int ultimo_movimento = millis();
 int cooldown = 2000;
@@ -63,6 +66,8 @@ void movimentar_heroi(){
 
 void movimentar_inimigo(){
   if(!podeMovimentar()) { return; } 
+  
+  
   
   int[] lin_inimigos = new int[quant_inimigo];
   int[] col_inimigos = new int[quant_inimigo];
@@ -131,11 +136,12 @@ void desenhar_inimigo(){
   float l = width/(float)m;
   float h = height/(float)n;
   
-  PImage inimigoImage = loadImage("inimigo1.png");
+  PImage inimigoImage;
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
       if(grid[i][j] == Celula.INIMIGO) {
+        inimigoImage = loadImage("inimigo" + str(int(random(1, 2+1))) + ".png");
         image(inimigoImage, j * l, i * h, l, h);
       }
     }
@@ -147,6 +153,7 @@ void desenhar_inimigo(){
 void inicializaGrid(){
   gridImage = new PImage[n][m];
   grid = new Celula[n][m];
+  posInimigos = new PosicaoDTO[quant_inimigo];
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
@@ -168,15 +175,14 @@ void inicializaGrid(){
   
   grid[linha][coluna] = Celula.HEROI;
   
-  for(int i = quant_inimigo; i > 0; i--){
-    int col_inimigo = int(random(m));
-    int lin_inimigo = int(random(n));
+  for(int i = 0; i < quant_inimigo; i++){
+    posInimigos[i] = new PosicaoDTO(int(random(m)), int(random(n)));
     
-    if(grid[lin_inimigo][col_inimigo] != Celula.GRAMA) { 
-      i++; }  
+    if(grid[int(posInimigos[i].x)][int(posInimigos[i].y)] != Celula.GRAMA) { 
+      i--; }  
     
     else {
-      grid[lin_inimigo][col_inimigo] = Celula.INIMIGO; }
+      grid[int(posInimigos[i].x)][int(posInimigos[i].y)] = Celula.INIMIGO; }
   }
 }
 
