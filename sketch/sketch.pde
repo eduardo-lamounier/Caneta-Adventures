@@ -7,8 +7,6 @@ Celula[][] grid;
 PImage[][] gridImage;
 int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
-int linha = 14; // Linha onde o héroi surge
-int coluna = 10; // Coluna onde o heroi surge
 
 Equipe equipe_jogador;
 int nivel_heroi = 1;
@@ -31,7 +29,7 @@ void setup(){
   menu = new Menu();
   
   equipe_jogador = new Equipe(
-    new PosicaoDTO(linha, coluna),
+    new PosicaoDTO(14, 10),
     new Heroi(nivel_heroi, new SapoLanceiro()), 
     new Heroi(nivel_heroi, new SapoLanceiro()), 
     new Heroi(nivel_heroi, new SapoLanceiro())
@@ -199,7 +197,7 @@ void inicializaGrid(){
       }
       
       else {
-        if(i != linha || j != coluna) {
+        if(i != equipe_jogador.posicao.x || j != equipe_jogador.posicao.y) {
           gridImage[i][j] = loadImage("pedra.png");
           grid[i][j] = Celula.PEDRA;
         }
@@ -209,7 +207,7 @@ void inicializaGrid(){
     }                
   }
   
-  grid[linha][coluna] = Celula.HEROI;
+  grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = Celula.HEROI;
   
   for(int i = 0; i < quant_inimigo; i++){
     posInimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
