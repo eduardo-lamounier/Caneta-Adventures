@@ -1,8 +1,8 @@
 public class PosicaoDTO {
-  public float x;
-  public float y;
+  public int x;
+  public int y;
   
-  public PosicaoDTO(float x, float y) {
+  public PosicaoDTO(int x, int y) {
     this.x = x;
     this.y = y;
   }
