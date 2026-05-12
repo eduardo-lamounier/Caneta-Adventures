@@ -67,10 +67,10 @@ public class Menu{
       
       // X:
       stroke(255);
-      line(eixoX + comprimento / 5, eixoY + altura / 5,
-           eixoX + comprimento * 4 / 5, eixoY + altura * 4 / 5);
-      line(eixoX + comprimento / 5, eixoY + altura * 4 /5,
-           eixoX + comprimento * 4 / 5, eixoY + altura / 5);
+      line(eixoX + comprimento / 5, eixoY + altura / 5,          // Ponto 1 - linha 1
+           eixoX + comprimento * 4 / 5, eixoY + altura * 4 / 5); // Ponto 2 - linha 1
+      line(eixoX + comprimento / 5, eixoY + altura * 4 /5,       // Ponto 1 - linha 2
+           eixoX + comprimento * 4 / 5, eixoY + altura / 5);     // Ponto 2 - linha 2
     }
   }
   
