@@ -79,12 +79,19 @@ public class Batalha {
     
   }
   
-  public void iniciar() {
-    estado_batalha = EstadoBatalha.EM_PROGRESSO;
-    for(turno_atual = 1; !turno(); turno_atual++);
+  private void iniciar() {
+    ThreadBatalha thread = new ThreadBatalha();
+    thread.start();
+  }
 
-    turno_atual = 0;
-    // ATUALIZAR ESTADO DA BATALHA PARA DERROTA OU VITÓRIA
+  private class ThreadBatalha extends Thread {
+    public void run() {
+      estado_batalha = EstadoBatalha.EM_PROGRESSO;
+      for(turno_atual = 1; !turno(); turno_atual++);
+
+      turno_atual = 0;
+      // ATUALIZAR ESTADO DA BATALHA PARA DERROTA OU VITÓRIA
+    }
   }
 
   public Batalha(Equipe herois, Equipe inimigos) {
