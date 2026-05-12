@@ -31,8 +31,8 @@ void keyPressed(){
   if(!menu_aberto) { movimentar_heroi(); }
   
   switch(key) {
-    case 'P':
-    case 'p':
+    case 'M':
+    case 'm':
       menu_aberto = !menu_aberto;
   }
 }
