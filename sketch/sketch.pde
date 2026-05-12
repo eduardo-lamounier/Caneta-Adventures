@@ -18,6 +18,8 @@ PosicaoDTO[] posInimigos;
 int ultimo_movimento = millis();
 int cooldown = 1500; // 1.5 segundos
 
+Equipe equipe_jogador;
+Batalha batalha;
 Menu menu;
 
 void setup(){
@@ -27,6 +29,15 @@ void setup(){
   estado = Estado.MENU;
   inicializaGrid();
   menu = new Menu();
+  
+  int nivel = (int)random(1, 3+1);
+  
+  equipe_jogador = new Equipe(
+    new PosicaoDTO(linha, coluna),
+    new Heroi(nivel, new SapoLanceiro()), 
+    new Heroi(nivel, new SapoLanceiro()), 
+    new Heroi(nivel, new SapoLanceiro())
+  );
 }
 
 void draw(){
@@ -150,8 +161,7 @@ void movimentar_inimigo(){
        break;
      
      default:
-       print("Deu errado, no sorteio de movimentação!");
-       break;
+       throw new RuntimeException("Deu errado, no sorteio de movimentação!");
     }
   }
 }
@@ -164,8 +174,36 @@ boolean podeMovimentar(){
   return true;
 }
 
+Inimigo inimigo_aleatorio(int nivel) {
+  int tipo_personagem = (int)random(1, 2+1);
+  
+  switch(tipo_personagem) {
+    case 1:
+      return new Inimigo(nivel, new SapoLanceiro());
+    case 2:
+      return new Inimigo(nivel, new Demonio());
+    default:
+      throw new RuntimeException("Tipo de personagem inválido");
+  }
+}
+
 void colisao(){
   estado = Estado.BATALHA;
+  
+  int nivel_inimigo_max = (equipe_jogador.get_nivel() + 1);
+  int nivel_inimigo_min = max(0, equipe_jogador.get_nivel() - 1);
+  
+  int nivel_inimigos = (int)random(nivel_inimigo_min, nivel_inimigo_max+1);
+  
+  Equipe inimigos = new Equipe(
+    equipe_jogador.get_posicao(),
+    inimigo_aleatorio(nivel_inimigos),
+    inimigo_aleatorio(nivel_inimigos),
+    inimigo_aleatorio(nivel_inimigos)
+  );
+  
+  batalha = new Batalha(equipe_jogador, inimigos);
+  batalha.iniciar();
 }
 
 void desenhar_heroi(){
