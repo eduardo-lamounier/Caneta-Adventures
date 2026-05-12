@@ -1,16 +1,16 @@
 public class Menu{
   protected PFont titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
   
-  protected color cor_iniciar = color(#6C350A);
-  
-  protected BotaoIniciar iniciar = new BotaoIniciar(width / 6, height / 2, 4 * width / 6, height / 4, 
-                                cor_iniciar);
+  protected BotaoIniciar iniciar = new BotaoIniciar(width / 6, height * 2 / 5, 4 * width / 6, height / 4, 
+                                #BC7920);
                                 
-  protected BotaoSair sair = new BotaoSair(width * 6 / 7, 0, width / 7, height / 7, #6C350A);
+  protected BotaoSair sair = new BotaoSair(width * 10 / 11, 0, width / 11, height / 9, #898989);
+  
+  protected BotaoManual manual = new BotaoManual(width / 6, height * 3 / 4, 4 * width / 6, height / 6, #BC7920);
   
   public void desenhar(){
   // Background:
-    background(#45B9F5);
+    background(#194574);
     
   // Título:
     fill(255, 255, 0);
@@ -26,6 +26,9 @@ public class Menu{
     
   // Botao de sair
     sair.desenharBotao();
+    
+  // Botao para o manual
+    manual.desenharBotao();
   }
   
   public boolean passarEstado(){
@@ -69,5 +72,20 @@ public class Menu{
       line(eixoX + comprimento / 5, eixoY + altura * 4 /5,
            eixoX + comprimento * 4 / 5, eixoY + altura / 5);
     }
+  }
+  
+  public class BotaoManual extends Botao {
+   BotaoManual(float eixoX, float eixoY, float comprimento, float altura, color cor) {
+     super(eixoX, eixoY, comprimento, altura, cor);
+   }
+   
+   void desenharBotao(){
+     super.desenharBotao();
+     
+     fill(255);
+     textSize(75);
+     
+     text("Como jogar?", eixoX + (comprimento / 2), eixoY + (altura * 2 / 3));
+   }
   }
 }
