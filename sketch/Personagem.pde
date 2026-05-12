@@ -7,6 +7,10 @@ public abstract class Personagem {
   
   protected Habilidade[] habilidades;
   
+  public int get_id() { return tipo_personagem.get_id(); }
+  public String get_nome() { return tipo_personagem.get_nome(); }
+  public PImage get_sprite() { return tipo_personagem.get_sprite(); }
+  
   public float get_vida_atual() { return vida_atual; }
   public int get_vel() { return vel; }
   public float get_atk() { return atk; }
@@ -22,8 +26,17 @@ public abstract class Personagem {
     vel += incremento;
   }
   
-  public abstract Habilidade escolher_habilidade();
-  public abstract Personagem escolher_alvo(Personagem[] oponentes);
+  public void decrementar_cooldowns() {
+    for(int i = 0; i < 3; i++)
+      if(habilidades[i].get_cooldown() > 0)
+        habilidades[i].decrementar_cooldown();
+  }
+  
+  public abstract void escolher_habilidade();
+  public abstract Habilidade obter_habilidade_escolhida();
+  
+  public abstract void escolher_alvo(Personagem[] oponentes);
+  public abstract Personagem obter_alvo_escolhido();
   
   public Personagem(int nivel, TipoPersonagem tipo_personagem) {
     this.tipo_personagem = tipo_personagem;

@@ -52,6 +52,7 @@ void draw(){
       break;
     
     case BATALHA:
+      batalha.avancar();
       break;
       
     case FINAL:
@@ -67,7 +68,6 @@ void keyPressed(){
   if(estado == Estado.MENU) { 
     if(key == ' ') { estado = Estado.EXPLORACAO; }
   }
-  
   
   if(estado == Estado.EXPLORACAO) { movimentar_heroi(); }
   
@@ -172,7 +172,6 @@ void colisao(){
   );
   
   batalha = new Batalha(equipe_jogador, inimigos);
-  batalha.iniciar();
 }
 
 void desenhar_heroi(){

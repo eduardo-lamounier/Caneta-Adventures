@@ -1,12 +1,36 @@
 public class Inimigo extends Personagem {
+  private Habilidade habilidade_escolhida;
+  private Personagem alvo_escolhido;
+  
   @Override
-  public Habilidade escolher_habilidade() {
-    return habilidades[(int)random(3)];
+  public void escolher_habilidade() {
+    delay(2000);
+    int escolha;
+    
+    // Isso não será um loop infinito porque todo personagem tem uma habilidade
+    // padrão "Golpear", que não tem cooldown
+    do {
+      escolha = (int)random(3);
+    } while(habilidades[escolha].get_cooldown() > 0);
+    
+    habilidade_escolhida = habilidades[escolha];
   }
   
   @Override
-  public Personagem escolher_alvo(Personagem[] alvos) {
-    return alvos[(int)random(alvos.length)];
+  public Habilidade obter_habilidade_escolhida() {
+    assert(habilidade_escolhida != null);
+    return habilidade_escolhida;
+  }
+  
+  @Override
+  public void escolher_alvo(Personagem[] alvos_possiveis) {
+    alvo_escolhido = alvos_possiveis[(int)random(3)];
+  }
+  
+  @Override
+  public Personagem obter_alvo_escolhido() {
+    delay(2000);
+    return alvo_escolhido;
   }
   
   public Inimigo(int nivel, TipoPersonagem tipo_personagem) {
