@@ -19,9 +19,6 @@ PosicaoDTO[] posInimigos;
 // Linhas e colunas onde os inimigos estão
 Equipe[] equipe_inimigo;
 
-int ultimo_movimento = millis();
-int cooldown = 1500; // 1.5 segundos
-
 Batalha batalha;
 Menu menu;
 
@@ -100,11 +97,11 @@ void movimentar_heroi(){
   }
   
   if(equipe_jogador.movimentar(direcao, grid, n, m)) { colisao(); }
+  // Como que para verificar executa a função, 
+  // tem que ser executada apenas uma vez.
 }
 
 void movimentar_inimigo(){
-  if(!podeMovimentar()) { return; } 
-  
   for(int i = 0; i < quant_inimigo; i++){
     int movimento = int(random(0, 4));
     
@@ -133,14 +130,6 @@ void movimentar_inimigo(){
   
   if(equipe_inimigo[i].movimentar(direcao, grid, n, m)) { colisao(); }
   }
-}
-
-boolean podeMovimentar(){
-  if(millis() - ultimo_movimento < cooldown) { return false; }
-  
-  ultimo_movimento = millis();
-  
-  return true;
 }
 
 Inimigo inimigo_aleatorio(int nivel) {

@@ -7,7 +7,8 @@ public class Equipe {
   private int xp;
   private int nivel;
   private Personagem[] personagens;
-  private long cooldown; 
+  private long cooldown;
+  private long ultimo_movimento;
   
   public void ganhar_xp(int xp_ganho) {
     xp += xp_ganho;
@@ -24,6 +25,8 @@ public class Equipe {
     // Retorna se houve colisão com a equipe adversária
     
     boolean colisao = false;
+    
+    if(!podeMovimentar()) { return colisao; }
     
     Celula temp = grid[posicao.x][posicao.y];
     // Atualiza o grid, sem outra função
@@ -103,8 +106,15 @@ public class Equipe {
     
     return false;
   }
- 
   
+  public boolean podeMovimentar(){
+  if(millis() - ultimo_movimento < cooldown) { return false; }
+  
+  ultimo_movimento = millis();
+  
+  return true;
+  }
+ 
   public PosicaoDTO get_posicao() { return posicao; }
   
   public Personagem[] get_personagens() {
@@ -120,10 +130,17 @@ public class Equipe {
   public Equipe(PosicaoDTO posicao, Heroi heroi1, Heroi heroi2, Heroi heroi3) {
     this(posicao);
     personagens = new Heroi[] { heroi1, heroi2, heroi3 };
+    
+    cooldown = 500;
+    ultimo_movimento = millis();
   }
   
   public Equipe(PosicaoDTO posicao, Inimigo inim1, Inimigo inim2, Inimigo inim3) {
     this(posicao);
     personagens = new Inimigo[] { inim1, inim2, inim3 };
+    
+    cooldown = int(random(1, 6)) * 1000; 
+    // Entre 2 a 5 segundos de cooldown
+    ultimo_movimento = millis();
   }
 }
