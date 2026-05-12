@@ -1,3 +1,6 @@
+enum Estado {MENU, EXPLORACAO, BATALHA, FINAL}
+Estado estado;
+
 enum Celula {GRAMA, PEDRA, INIMIGO, HEROI};
 Celula[][] grid;
 
@@ -6,34 +9,55 @@ int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
 int coluna = 10; // Coluna onde o heroi surge
-int quant_inimigo = 5; 
+
+int quant_inimigo = 5;
+PosicaoDTO[] posInimigos; 
+PImage[] inimigoImage;
+// Linhas e colunas onde os inimigos estão
 
 int ultimo_movimento = millis();
-int cooldown = 2000;
+int cooldown = 1500; // 1.5 segundos
 
 Menu menu;
-boolean menu_aberto = true;
 
 void setup(){
   size(800,600);
   frameRate(60);
   
+  estado = Estado.MENU;
   inicializaGrid();
   menu = new Menu();
 }
 
 void draw(){
-  mostraGrid();
+  switch(estado) {
+    case MENU:
+      desenhaMenu();
+      break;
+      
+    case EXPLORACAO:
+      mostraGrid();
+      break;
+    
+    case BATALHA:
+      break;
+      
+    case FINAL:
+      break;
+      
+    default:
+      break;
+  }
 }
 
 // exit()
 void keyPressed(){
-  if(!menu_aberto) { movimentar_heroi(); }
+  if(estado == Estado.EXPLORACAO) { movimentar_heroi(); }
   
   switch(key) {
     case 'M':
     case 'm':
-      menu_aberto = !menu_aberto;
+      estado = Estado.MENU;
   }
 }
 
@@ -42,6 +66,7 @@ void movimentar_heroi(){
     case 'w':
       if(linha > 0 && grid[linha - 1][coluna] == Celula.GRAMA){
         linha = atualizaGrid(linha, coluna, -1, true); }
+        
       break;
       
     case 'a':
@@ -64,43 +89,28 @@ void movimentar_heroi(){
 void movimentar_inimigo(){
   if(!podeMovimentar()) { return; } 
   
-  int[] lin_inimigos = new int[quant_inimigo];
-  int[] col_inimigos = new int[quant_inimigo];
-  
-  int coordenada = 0;
-  
-  for(int i = 0; i < n; i++)
-    for(int j = 0; j < m; j++) {
-      if(grid[i][j] == Celula.INIMIGO) {
-        lin_inimigos[coordenada] = i;
-        col_inimigos[coordenada] = j;
-        
-        coordenada++;
-      }
-    }
-  
   for(int i = 0; i < quant_inimigo; i++){
     int movimento = int(random(0, 4));
     
     switch (movimento) {
      case 0: // Movimento para cima
-       if(lin_inimigos[i] > 0 && grid[lin_inimigos[i] - 1][col_inimigos[i]] == Celula.GRAMA){
-         atualizaGrid(lin_inimigos[i], col_inimigos[i], -1, true); }
+       if(int(posInimigos[i].x) > 0 && grid[int(posInimigos[i].x) - 1][int(posInimigos[i].y)] == Celula.GRAMA){
+         posInimigos[i].x = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), -1, true); }
        break;
        
      case 1: // movimento para a esquerda
-       if(col_inimigos[i] > 0 && grid[lin_inimigos[i]][col_inimigos[i] - 1] == Celula.GRAMA){
-         atualizaGrid(lin_inimigos[i], col_inimigos[i], -1, false); }
+       if(int(posInimigos[i].y) > 0 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) - 1] == Celula.GRAMA){
+         posInimigos[i].y = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), -1, false); }
        break;
      
      case 2: // movimento para baixo
-       if(lin_inimigos[i] < n-1 && grid[lin_inimigos[i] + 1][col_inimigos[i]] == Celula.GRAMA){
-         atualizaGrid(lin_inimigos[i], col_inimigos[i], 1, true); }
+       if(int(posInimigos[i].x) < n-1 && grid[int(posInimigos[i].x) + 1][int(posInimigos[i].y)] == Celula.GRAMA){
+         posInimigos[i].x = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), 1, true); }
        break;
      
      case 3: // movimento para direita
-       if(col_inimigos[i] < m-1 && grid[lin_inimigos[i]][col_inimigos[i] + 1] == Celula.GRAMA){
-         atualizaGrid(lin_inimigos[i], col_inimigos[i], 1, false); }
+       if(int(posInimigos[i].y) < m-1 && grid[int(posInimigos[i].x)][int(posInimigos[i].y) + 1] == Celula.GRAMA){
+         posInimigos[i].y = atualizaGrid(int(posInimigos[i].x), int(posInimigos[i].y), 1, false); }
        break;
      
      default:
@@ -131,14 +141,8 @@ void desenhar_inimigo(){
   float l = width/(float)m;
   float h = height/(float)n;
   
-  PImage inimigoImage = loadImage("inimigo1.png");
-  
-  for(int i = 0; i < n; i++) {
-    for(int j = 0; j < m; j++) {
-      if(grid[i][j] == Celula.INIMIGO) {
-        image(inimigoImage, j * l, i * h, l, h);
-      }
-    }
+  for(int i = 0; i < quant_inimigo; i++) {
+        image(inimigoImage[i], int(posInimigos[i].y) * l, int(posInimigos[i].x) * h, l, h);
   }
   
   movimentar_inimigo();
@@ -147,6 +151,8 @@ void desenhar_inimigo(){
 void inicializaGrid(){
   gridImage = new PImage[n][m];
   grid = new Celula[n][m];
+  posInimigos = new PosicaoDTO[quant_inimigo];
+  inimigoImage = new PImage[quant_inimigo];
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
@@ -168,15 +174,16 @@ void inicializaGrid(){
   
   grid[linha][coluna] = Celula.HEROI;
   
-  for(int i = quant_inimigo; i > 0; i--){
-    int col_inimigo = int(random(m));
-    int lin_inimigo = int(random(n));
+  for(int i = 0; i < quant_inimigo; i++){
+    posInimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
     
-    if(grid[lin_inimigo][col_inimigo] != Celula.GRAMA) { 
-      i++; }  
+    if(grid[int(posInimigos[i].x)][int(posInimigos[i].y)] != Celula.GRAMA) { 
+      i--; }  
     
     else {
-      grid[lin_inimigo][col_inimigo] = Celula.INIMIGO; }
+      grid[int(posInimigos[i].x)][int(posInimigos[i].y)] = Celula.INIMIGO; 
+      inimigoImage[i] = loadImage("inimigo" + str(int(random(1, 2+1))) + ".png");
+    }
   }
 }
 
@@ -197,18 +204,6 @@ int atualizaGrid(int linha, int coluna, int distancia, boolean mudarLinha){
 }
 
 void mostraGrid(){
-  if(menu_aberto) {
-    menu.desenhar();
-    
-    if(menu.passarEstado()) {
-      menu_aberto = false;
-    }
-    
-    menu.sairJogo();
-    
-    return;
-  }
-  
   float l = width/(float)m;
   float h = height/(float)n;
   
@@ -222,4 +217,16 @@ void mostraGrid(){
   
   desenhar_heroi();  
   desenhar_inimigo();
+}
+
+void desenhaMenu(){
+  menu.desenhar();
+    
+  if(menu.passarEstado()) {
+    estado = Estado.EXPLORACAO;
+  }
+  
+  menu.sairJogo();
+  
+  return;
 }
