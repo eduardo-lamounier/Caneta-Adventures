@@ -8,6 +8,7 @@ public abstract class Habilidade {
   
   public int get_id() { return id; }
   public String get_nome() { return nome; }
+  public String get_descricao() { return descricao; }
   public int get_cooldown() { return cooldown_atual; }
   
   public boolean altera_velocidade() { return altera_vel; }
