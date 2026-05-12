@@ -1,8 +1,8 @@
 public enum EstadoBatalha { NAO_INICIADA, EM_PROGRESSO, VITORIA, DERROTA }
 
 public class Batalha {
-  private Heroi[] herois;
-  private Inimigo[] inimigos;
+  private Equipe herois;
+  private Equipe inimigos;
   
   private int atacante_atual;
   private Personagem[] fila_turnos;
@@ -22,7 +22,7 @@ public class Batalha {
   // Executa os turnos de cada personagem e retorna se a batalha deve
   // ser finalizada (true) ou não (false)
   private boolean turno() {
-    for(int atacante_atual = 0; atacante_atual < 6; atacante_atual++) {
+    for(atacante_atual = 0; atacante_atual < 6; atacante_atual++) {
       Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
 
       // IMPLEMENTAR TURNO PARA O PERSONAGEM ATUAL
@@ -42,11 +42,11 @@ public class Batalha {
     for(turno_atual = 1; !turno(); turno_atual++);
 
     turno_atual = 0;
-    // ATUALIZAR ESTADO DA BATALHA
+    // ATUALIZAR ESTADO DA BATALHA PARA DERROTA OU VITÓRIA
   }
 
-  public Batalha(Equipe equipe, Inimigo[] inimigos) {
-    this.herois = equipe.get_herois();
+  public Batalha(Equipe herois, Equipe inimigos) {
+    this.herois = herois;
     this.inimigos = inimigos;
    
     turno_atual = 0;
@@ -54,9 +54,9 @@ public class Batalha {
     estado_batalha = EstadoBatalha.NAO_INICIADA;
     
     int i = 0;
-    for(Heroi heroi : this.herois)
+    for(Personagem heroi : herois.get_personagens())
       fila_turnos[i++] = heroi;
-    for(Inimigo inimigo : this.inimigos)
+    for(Personagem inimigo : inimigos.get_personagens())
       fila_turnos[i++] = inimigo;
     
     ordenar_fila();
