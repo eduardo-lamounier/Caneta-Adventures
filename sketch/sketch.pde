@@ -7,8 +7,9 @@ int m = 20; // Número de colunas do grid
 int linha = 14; // Linha onde o héroi surge
 int coluna = 10; // Coluna onde o heroi surge
 int quant_inimigo = 5; 
-int col_inimigo;
-int lin_inimigo;
+
+int ultimo_movimento = millis();
+int cooldown = 2000;
 
 Menu menu;
 boolean menu_aberto = true;
@@ -60,6 +61,63 @@ void movimentar_heroi(){
   }
 }
 
+void movimentar_inimigo(){
+  if(!podeMovimentar()) { return; } 
+  
+  int[] lin_inimigos = new int[quant_inimigo];
+  int[] col_inimigos = new int[quant_inimigo];
+  
+  int coordenada = 0;
+  
+  for(int i = 0; i < n; i++)
+    for(int j = 0; j < m; j++) {
+      if(grid[i][j] == Celula.INIMIGO) {
+        lin_inimigos[coordenada] = i;
+        col_inimigos[coordenada] = j;
+        
+        coordenada++;
+      }
+    }
+  
+  for(int i = 0; i < quant_inimigo; i++){
+    int movimento = int(random(0, 4));
+    
+    switch (movimento) {
+     case 0: // Movimento para cima
+       if(lin_inimigos[i] > 0 && grid[lin_inimigos[i] - 1][col_inimigos[i]] == Celula.GRAMA){
+         atualizaGrid(lin_inimigos[i], col_inimigos[i], -1, true); }
+       break;
+       
+     case 1: // movimento para a esquerda
+       if(col_inimigos[i] > 0 && grid[lin_inimigos[i]][col_inimigos[i] - 1] == Celula.GRAMA){
+         atualizaGrid(lin_inimigos[i], col_inimigos[i], -1, false); }
+       break;
+     
+     case 2: // movimento para baixo
+       if(lin_inimigos[i] < n-1 && grid[lin_inimigos[i] + 1][col_inimigos[i]] == Celula.GRAMA){
+         atualizaGrid(lin_inimigos[i], col_inimigos[i], 1, true); }
+       break;
+     
+     case 3: // movimento para direita
+       if(col_inimigos[i] < m-1 && grid[lin_inimigos[i]][col_inimigos[i] + 1] == Celula.GRAMA){
+         atualizaGrid(lin_inimigos[i], col_inimigos[i], 1, false); }
+       break;
+     
+     default:
+       print("Deu errado, no sorteio de movimentação!");
+       break;
+    }
+  }
+}
+
+boolean podeMovimentar(){
+  if(millis() - ultimo_movimento < cooldown) { return false; }
+  
+  ultimo_movimento = millis();
+  
+  return true;
+}
+
 void desenhar_heroi(){
   float l = width/(float)m;
   float h = height/(float)n;
@@ -81,7 +139,9 @@ void desenhar_inimigo(){
         image(inimigoImage, j * l, i * h, l, h);
       }
     }
-  }  
+  }
+  
+  movimentar_inimigo();
 }
 
 void inicializaGrid(){
@@ -137,6 +197,18 @@ int atualizaGrid(int linha, int coluna, int distancia, boolean mudarLinha){
 }
 
 void mostraGrid(){
+  if(menu_aberto) {
+    menu.desenhar();
+    
+    if(menu.passarEstado()) {
+      menu_aberto = false;
+    }
+    
+    menu.sairJogo();
+    
+    return;
+  }
+  
   float l = width/(float)m;
   float h = height/(float)n;
   
@@ -150,14 +222,4 @@ void mostraGrid(){
   
   desenhar_heroi();  
   desenhar_inimigo();
-  
-  if(menu_aberto) {
-    menu.desenhar();
-    
-    if(menu.passarEstado()) {
-      menu_aberto = false;
-    }
-    
-    menu.sairJogo();
-  }
 }
