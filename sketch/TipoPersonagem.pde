@@ -8,8 +8,8 @@ public abstract class TipoPersonagem {
   public PImage get_sprite() { return loadImage(sprite); }
   
   public abstract int gerar_vel(int nivel);
-  public abstract int gerar_vida_max(int nivel);
-  public abstract int gerar_atk(int nivel);
+  public abstract float gerar_vida_max(int nivel);
+  public abstract float gerar_atk(int nivel);
   
   // Deve retornar as instâncias das 3 habilidades que o tipo de
   // personagem tem
