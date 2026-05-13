@@ -269,3 +269,7 @@ void desenha_menu(){
 void desenha_tutorial() { 
   tutorial.desenhar();
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb

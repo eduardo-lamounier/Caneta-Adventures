@@ -103,6 +103,7 @@ public class GameOver {
   private boolean vitoria;
   
 <<<<<<< HEAD
+<<<<<<< HEAD
   protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
   
   @Override
@@ -113,6 +114,8 @@ public class GameOver {
     
     textAlign(CENTER);
 =======
+=======
+>>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
   public GameOver(boolean vitoria) {
     this.vitoria = vitoria;
     titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
@@ -135,7 +138,10 @@ public class GameOver {
     
     // Título Game Over / Vitória
     textAlign(CENTER, CENTER);
+<<<<<<< HEAD
 >>>>>>> 5ad4797b64f00ca0258a22990188ef96a433e761
+=======
+>>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
     textFont(titulo);
     
     // Sombra
@@ -148,6 +154,9 @@ public class GameOver {
     text(vitoria ? "Vitória!" : "Game Over", width / 2, height / 4);
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
   // Título:
     textFont(fonteCorpo); // sua fonte branca
     fill(255);
@@ -190,6 +199,7 @@ public class GameOver {
     text("Pressione M para voltar ao menu.", width / 2, 540);
     
     sair.desenhar_botao();
+<<<<<<< HEAD
     }
 }
 
@@ -237,6 +247,9 @@ public class GameOver extends Menu {
     textSize(15);
     text("Obrigado por jogar!", width / 2, 540);
 =======
+=======
+
+>>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
     // Mensagem
     fill(255, 200);
     textSize(24);

@@ -139,13 +139,16 @@ public class Batalha {
     final color cor_atacante_heroi = color(#E4FF1A);
     final color cor_nao_atacante_inimigo = color(#B9340F);
     final color cor_atacante_inimigo = color(#ED4618);
+    final color cor_morto = color(#a0a0a0);
 
     for(int i = 0; i < 6; i++) {
-      if(atacante_atual == i && (fila_turnos[i] instanceof Heroi)) {
+      if(!fila_turnos[i].esta_vivo()) {
+        fill(cor_morto);
+      } else if(atacante_atual == i && (fila_turnos[i] instanceof Heroi)) {
         fill(cor_atacante_heroi);
       } else if(atacante_atual != i && (fila_turnos[i] instanceof Heroi)) {
         fill(cor_nao_atacante_heroi);
-      } else if(atacante_atual == i && !(fila_turnos[i] instanceof Heroi)) {
+      } else if(atacante_atual == i && fila_turnos[i] instanceof Inimigo) {
         fill(cor_atacante_inimigo);
       } else {
         fill(cor_nao_atacante_inimigo);
@@ -227,13 +230,19 @@ public class Batalha {
       turno_atual++;
       atacante_atual = (atacante_atual + 1) % 6;
     }
-    
+
     Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
     boolean personagem_atual_heroi =
       personagem_atacante_atual instanceof Heroi;
     
     switch(estado_atual) {
       case ESCOLHA_HABILIDADE:
+        if(!fila_turnos[atacante_atual].esta_vivo()) {
+          // retorna ainda na etapa de escolha de habilidade,
+          // o que vai mudar o turno para outro personagem
+          return;
+        }
+
         personagem_atacante_atual.decrementar_cooldowns();
         personagem_atacante_atual.escolher_habilidade();
         estado_atual = EstadoTurno.OBTER_ESCOLHA_HABILIDADE;
