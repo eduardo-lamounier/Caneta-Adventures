@@ -22,6 +22,8 @@ public class Batalha {
   private int duracao_espera = 0;
   private boolean uso_habilidade_executado = false;
   
+  private int nivel_herois;
+  private int nivel_inimigos;
   private int xp_vitoria;
 
   public int get_xp_vitoria() { return xp_vitoria; }
@@ -58,15 +60,7 @@ public class Batalha {
     final int margem_y_sprites = 75;
     final int espacamento_y_sprites = 70;
     final int tamanho_sprite = 50;
-
-    final int margem_x_hp = 40;
-    final int comprimento_hp = 150;
-    final int altura_hp = (int)tamanho_sprite * 1/3;
-    final int tamanho_texto_hp = 17;
-    final color cor_fundo_hp = color(#343232);
-    final color cor_texto_hp = color(#ffffff);
-    final color cor_barra_hp = color(#38D30B);
-
+ 
     for(int i = 0; i < 3; i++) {
       // desenha sprites: =======================================
 
@@ -107,6 +101,15 @@ public class Batalha {
         );
 
       // desenha barras de hp: =====================================
+      
+      final int margem_x_hp = 40;
+      final int comprimento_hp = 150;
+      final int altura_hp = (int)tamanho_sprite * 1/3;
+      final int tamanho_texto_hp = 17;
+      final color cor_fundo_hp = color(#343232);
+      final color cor_texto_hp = color(#ffffff);
+      final color cor_barra_hp = color(#38D30B);
+
 
       fill(cor_fundo_hp);
       
@@ -158,8 +161,44 @@ public class Batalha {
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp / 2,
         margem_y_sprites + espacamento_y_sprites * i
       );
-    }
+      
+      // desenha nível =============================================
+   
+      final int tamanho_texto_nivel = 14;
+      final int margem_nivel = 20;
+      final int raio_nivel = 15;
+      final color cor_fundo_nivel = color(#0d0daa);
+      final color cor_texto_nivel = color(#ffffff); 
 
+      fill(cor_fundo_nivel);
+      
+      circle(
+        margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        raio_nivel
+      );
+      circle(
+        width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
+        margem_y_sprites + espacamento_y_sprites * i,
+        raio_nivel
+      );
+
+      textSize(tamanho_texto_nivel);
+      fill(cor_texto_nivel);
+      textAlign(CENTER, CENTER);
+
+      text(
+        nivel_herois,
+        margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp
+      );
+      text(
+        nivel_inimigos,
+        width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
+        margem_y_sprites + espacamento_y_sprites * i
+      );
+    }
+ 
     // ordem de ataque ============================================
 
     final int margem_ordem = 40;
@@ -340,6 +379,8 @@ public class Batalha {
     alvo_escolhido = null;
     this.herois = (Heroi[])herois.get_personagens();
     this.inimigos = (Inimigo[])inimigos.get_personagens();
+    nivel_herois = herois.get_nivel();
+    nivel_inimigos = inimigos.get_nivel();
     fila_turnos = new Personagem[6]; 
     
     int i = 0;
