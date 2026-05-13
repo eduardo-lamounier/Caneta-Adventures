@@ -24,16 +24,16 @@ void setup(){
   size(800,600);
   frameRate(60);
   
-  estado = Estado.MENU;
-  inicializaGrid();
-  menu = new Menu();
-  
   equipe_jogador = new Equipe(
     new PosicaoDTO(14, 10),
     new Heroi(nivel_heroi, new SapoLanceiro()), 
     new Heroi(nivel_heroi, new SapoLanceiro()), 
     new Heroi(nivel_heroi, new SapoLanceiro())
   );
+  
+  estado = Estado.MENU;
+  inicializaGrid();
+  menu = new Menu();
 }
 
 void draw(){
