@@ -33,7 +33,7 @@ void setup(){
     new Heroi(nivel_heroi, new CanetaMagica())
   );
   
-  estado = Estado.FINAL;
+  estado = Estado.MENU;
   inicializa_grid();
   menu = new Menu();
   tutorial = new Tutorial();
