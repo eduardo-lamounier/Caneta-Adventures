@@ -299,7 +299,11 @@ void desenha_tutorial() {
 void desenha_final(){
   tela_final.desenhar();
   
-  if( tela_final.voltar_menu()) { estado = Estado.MENU; }
+  if( tela_final.voltar_menu()) { 
+    estado = Estado.MENU; 
+    delay(190);
+  }
+  
   if( tela_final.reiniciar_jogo()) { 
     reinicia_grid(); 
     estado = Estado.EXPLORACAO;
