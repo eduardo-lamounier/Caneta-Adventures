@@ -4,6 +4,7 @@ public abstract class Personagem {
   protected float vida_atual;
   protected float atk; // Multiplicador de dano gerado dependendo do nível da equipe
   protected int vel;
+  public float multiplicador_dano = 1;
   
   protected Habilidade[] habilidades;
   
