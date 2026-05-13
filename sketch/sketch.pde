@@ -1,4 +1,4 @@
-enum Estado {MENU, EXPLORACAO, BATALHA, FINAL}
+enum Estado {MENU, TUTORIAL, EXPLORACAO, BATALHA, FINAL}
 Estado estado;
 
 enum Celula {GRAMA, PEDRA, INIMIGO, HEROI};
@@ -19,6 +19,7 @@ Equipe[] equipe_inimigo;
 
 Batalha batalha;
 Menu menu;
+Tutorial tutorial;
 
 void setup(){
   size(800,600);
@@ -34,12 +35,17 @@ void setup(){
   estado = Estado.MENU;
   inicializa_grid();
   menu = new Menu();
+  tutorial = new Tutorial();
 }
 
 void draw(){
   switch(estado) {
     case MENU:
       desenha_menu();
+      break;
+      
+    case TUTORIAL:
+      desenha_tutorial();
       break;
       
     case EXPLORACAO:
@@ -251,12 +257,18 @@ void mostra_grid(){
 
 void desenha_menu(){
   menu.desenhar();
+  
+  if(menu.entrar_tutorial()) { 
+    estado = Estado.TUTORIAL;
+  }
     
   if(menu.passar_estado()) {
     estado = Estado.EXPLORACAO;
   }
   
   menu.sair_jogo();
-  
-  return;
+}
+
+void desenha_tutorial() { 
+  tutorial.desenhar();
 }
