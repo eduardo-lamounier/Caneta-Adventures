@@ -57,7 +57,7 @@ public class Batalha {
   
   public void desenhar() {
     final int margem_x_sprites = 50;
-    final int margem_y_sprites = 75;
+    final int margem_y_sprites = 50;
     final int espacamento_y_sprites = 70;
     final int tamanho_sprite = 50;
  
@@ -123,7 +123,7 @@ public class Batalha {
 
       rect(
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
-        margem_y_sprites + espacamento_y_sprites * i,
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i,
         comprimento_hp,
         altura_hp,
         15
@@ -143,7 +143,7 @@ public class Batalha {
 
       rect(
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
-        margem_y_sprites + espacamento_y_sprites * i,
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i,
         (int)comprimento_hp * razao_vida_inimigo,
         altura_hp,
         15
@@ -159,7 +159,7 @@ public class Batalha {
       text(
         nf(inimigos[i].get_vida_atual(), 0, 1) + "/" + nf(inimigos[i].get_vida_max(), 0, 1) + "hp",
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp / 2,
-        margem_y_sprites + espacamento_y_sprites * i
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i
       );
       
       // desenha nível =============================================
@@ -179,7 +179,7 @@ public class Batalha {
       );
       circle(
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
-        margem_y_sprites + espacamento_y_sprites * i,
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i,
         raio_nivel
       );
 
@@ -195,7 +195,7 @@ public class Batalha {
       text(
         nivel_inimigos,
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
-        margem_y_sprites + espacamento_y_sprites * i
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i
       );
     }
  
