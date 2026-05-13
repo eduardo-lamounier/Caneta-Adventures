@@ -22,6 +22,9 @@ public class Batalha {
   private int duracao_espera = 0;
   private boolean uso_habilidade_executado = false;
   
+  private int xp_vitoria;
+
+  public int get_xp_vitoria() { return xp_vitoria; }
   public int get_turno_atual() { return turno_atual; }
   public EstadoTurno get_estado_atual() { return estado_atual; }
 
@@ -311,10 +314,11 @@ public class Batalha {
     }
   }
 
-  public Batalha(Equipe herois, Equipe inimigos) {
+  public Batalha(Equipe herois, Equipe inimigos, int xp_vitoria) {
     turno_atual = 0;
     estado_atual = EstadoTurno.ESCOLHA_HABILIDADE;
     atacante_atual = -1;
+    this.xp_vitoria = xp_vitoria;
     habilidade_escolhida = null;
     alvo_escolhido = null;
     this.herois = (Heroi[])herois.get_personagens();

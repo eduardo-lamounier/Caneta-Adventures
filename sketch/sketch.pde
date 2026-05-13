@@ -51,8 +51,10 @@ void draw(){
       batalha.avancar();
       batalha.desenhar();
 
-      if (batalha.deve_finalizar())
+      if (batalha.deve_finalizar()) {
         estado = Estado.EXPLORACAO;
+        equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
+      }
   break;
       
     case FINAL:
@@ -158,6 +160,8 @@ void colisao(){
   
   int nivel_inimigos = (int)random(nivel_inimigo_min, nivel_inimigo_max+1);
   
+  int xp = (int)random(75, 150+1);
+
   Equipe inimigos = new Equipe(
     equipe_jogador.get_posicao(),
     inimigo_aleatorio(nivel_inimigos),
@@ -165,7 +169,7 @@ void colisao(){
     inimigo_aleatorio(nivel_inimigos)
   );
   
-  batalha = new Batalha(equipe_jogador, inimigos);
+  batalha = new Batalha(equipe_jogador, inimigos, xp);
 }
 
 void desenhar_heroi(){
@@ -269,7 +273,3 @@ void desenha_menu(){
 void desenha_tutorial() { 
   tutorial.desenhar();
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
