@@ -20,6 +20,7 @@ Equipe[] equipe_inimigo;
 Batalha batalha;
 Menu menu;
 Tutorial tutorial;
+GameOver tela_final;
 
 void setup(){
   size(800,600);
@@ -32,16 +33,21 @@ void setup(){
     new Heroi(nivel_heroi, new CanetaMagica())
   );
   
-  estado = Estado.MENU;
+  estado = Estado.FINAL;
   inicializa_grid();
   menu = new Menu();
   tutorial = new Tutorial();
+  tela_final = new GameOver(true);
 }
 
 void draw(){
   switch(estado) {
     case MENU:
       desenha_menu();
+      break;
+    
+    case TUTORIAL:
+      desenha_tutorial();
       break;
       
     case EXPLORACAO:
@@ -62,6 +68,7 @@ void draw(){
   break;
       
     case FINAL:
+      desenha_final();
       break;
 
     default:
@@ -263,6 +270,10 @@ void mostra_grid(){
   desenhar_inimigo();
 }
 
+void reinicia_grid() {
+ inicializa_grid(); 
+}
+
 void desenha_menu(){
   menu.desenhar();
   
@@ -277,6 +288,21 @@ void desenha_menu(){
   menu.sair_jogo();
 }
 
-void desenha_tutorial() { 
+void desenha_tutorial() {
+  if(tutorial.sair.botao_clicado()) { estado = Estado.MENU; delay(200);}
+  // O delay serve para que o botão de saída do menu não interprete o clicar,
+  // sendo que era do botão do estado de tutorial.
+  
   tutorial.desenhar();
+}
+
+void desenha_final(){
+  tela_final.desenhar();
+  
+  if( tela_final.voltar_menu()) { estado = Estado.MENU; }
+  if( tela_final.reiniciar_jogo()) { 
+    reinicia_grid(); 
+    estado = Estado.EXPLORACAO;
+    delay(200); // Para que o clique no botão não influêncie no outro.
+  }
 }

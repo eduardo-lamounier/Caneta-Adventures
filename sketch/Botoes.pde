@@ -1,4 +1,3 @@
-
 public class Botao{
   protected float eixo_x;
   protected float eixo_y;
