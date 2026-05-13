@@ -98,27 +98,61 @@ public class Menu{
 
 public class Tutorial extends Menu{
   
-  protected String texto = "Explore o mundo com os canetas azuis e derrote os inimigos!";
+  protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
   
   @Override
   public void desenhar() { 
-    // Background:
     background(#0B132B);
     
-  // Título:
     fill(#FFD166);
     
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER);
     textFont(titulo);
     textSize(100);
     
     text("Como jogar:", width / 2, height / 5);
     
+  // Título:
+    textFont(fonteCorpo); // sua fonte branca
     fill(255);
-    
-    textAlign(CENTER, CENTER);
     textSize(20);
+    textAlign(CENTER, TOP);
+  
+    // Bloco 1 — Exploração
+    fill(#f5c842);
+    textSize(24);
+    text("Exploração", width / 2, 160);
+  
+    fill(255);
+    textSize(18);
+    text("Use W A S D para mover sua equipe pelo mapa.", width / 2, 192);
+    text("Encontre os inimigos caminhando até eles.", width / 2, 216);
+  
+    // Bloco 2 — Batalha
+    fill(#f5c842);
+    textSize(24);
+    text("Batalha", width / 2, 280);
+  
+    fill(255);
+    textSize(18);
+    text("Ao colidir com um inimigo, a batalha começa automaticamente.", width / 2, 312);
+    text("Cada equipe tem 3 personagens que lutam em turnos.", width / 2, 336);
+  
+    // Bloco 3 — Habilidades
+    fill(#f5c842);
+    textSize(24);
+    text("Habilidades", width / 2, 400);
+  
+    fill(255);
+    textSize(18);
+    text("Cada personagem possui habilidades únicas de ataque e defesa.", width / 2, 432);
+    text("Escolha bem suas ações para vencer o combate!", width / 2, 456);
+  
+    // Rodapé — dica
+    fill(180);
+    textSize(15);
+    text("Pressione M para voltar ao menu.", width / 2, 540);
     
-    text(texto, width / 2, height * 2 / 5);
-  }
+    sair.desenhar_botao();
+    }
 }

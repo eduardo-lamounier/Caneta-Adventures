@@ -102,6 +102,9 @@ void movimentar_heroi(){
     case 'd':
       direcao = Direcao.DIREITA;
       break;
+    
+    default:
+      return;
   }
   
   if(equipe_jogador.movimentar(direcao, grid, n, m)) { colisao(); }
@@ -271,4 +274,6 @@ void desenha_menu(){
 
 void desenha_tutorial() { 
   tutorial.desenhar();
+  
+  if(tutorial.sair.botao_clicado()) { estado = Estado.MENU; delay(400);}
 }
