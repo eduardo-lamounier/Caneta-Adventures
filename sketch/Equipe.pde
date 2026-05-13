@@ -140,7 +140,7 @@ public class Equipe {
     personagens = new Inimigo[] { inim1, inim2, inim3 };
     
     cooldown = int(random(1, 6)) * 1000; 
-    // Entre 2 a 5 segundos de cooldown
+    // Entre 1 a 5 segundos de cooldown
     ultimo_movimento = millis();
   }
 }

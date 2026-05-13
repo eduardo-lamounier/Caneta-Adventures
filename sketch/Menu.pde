@@ -156,3 +156,49 @@ public class Tutorial extends Menu{
     sair.desenhar_botao();
     }
 }
+
+public class GameOver extends Menu {
+  protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
+  
+  @Override
+    void desenhar() {
+    background(#0d1b3e);
+  
+    textFont(titulo);
+    fill(#e03c3c); // vermelho no lugar do amarelo
+    textSize(72);
+    textAlign(CENTER, TOP);
+    text("Game Over", width / 2, 40);
+
+    textFont(fonteCorpo);
+    fill(255);
+    textSize(20);
+    textAlign(CENTER, TOP);
+    text("Sua equipe foi derrotada...", width / 2, 135);
+  
+    
+    fill(#f5c842);
+    textSize(24);
+    text("Resumo da partida", width / 2, 210);
+  
+    fill(255);
+    textSize(18);
+    text("Nível alcançado: " + equipe_jogador.get_nivel(), width / 2, 245);
+    //text("Batalhas vencidas: " + batalhas_vencidas, width / 2, 270);
+  
+    
+    fill(#f5c842);
+    textSize(24);
+    text("O que deseja fazer?", width / 2, 355);
+  
+    fill(255);
+    textSize(18);
+    text("[ ESC ]  Sair do jogo", width / 2, 390);
+    text("[ M ]  Voltar ao menu", width / 2, 415);
+  
+    
+    fill(180);
+    textSize(15);
+    text("Obrigado por jogar!", width / 2, 540);
+  }
+}
