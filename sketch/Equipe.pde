@@ -26,7 +26,7 @@ public class Equipe {
     
     boolean colisao = false;
     
-    if(!podeMovimentar()) { return colisao; }
+    if(!pode_movimentar()) { return colisao; }
     
     Celula temp = grid[posicao.x][posicao.y];
     // Atualiza o grid, sem outra função
@@ -41,7 +41,7 @@ public class Equipe {
       }
         
       else if(posicao.x > 0 && grid[posicao.x - 1][posicao.y] != Celula.PEDRA){
-        colisao = houveColisao(posicao.x - 1, posicao.y);
+        colisao = houve_colisao(posicao.x - 1, posicao.y);
       }
         
       return colisao;
@@ -55,7 +55,7 @@ public class Equipe {
       }
         
       else if(posicao.y > 0 && grid[posicao.x][posicao.y - 1] != Celula.PEDRA){
-        colisao = houveColisao(posicao.x, posicao.y - 1);
+        colisao = houve_colisao(posicao.x, posicao.y - 1);
       }
       
       return colisao;
@@ -69,7 +69,7 @@ public class Equipe {
       }
         
       else if(posicao.x < linhas_grid - 1 && grid[posicao.x + 1][posicao.y] != Celula.PEDRA){
-        colisao = houveColisao(posicao.x + 1, posicao.y);
+        colisao = houve_colisao(posicao.x + 1, posicao.y);
       }
       
       return colisao;
@@ -83,7 +83,7 @@ public class Equipe {
       }
         
       else if(posicao.y < colunas_grid - 1 && grid[posicao.x][posicao.y + 1] != Celula.PEDRA){
-        colisao = houveColisao(posicao.x, posicao.y + 1);
+        colisao = houve_colisao(posicao.x, posicao.y + 1);
       }
       
       return colisao;
@@ -93,7 +93,7 @@ public class Equipe {
     }
   }
   
-  public boolean houveColisao(int lin_adversaria, int col_adversaria) { 
+  public boolean houve_colisao(int lin_adversaria, int col_adversaria) { 
     if(grid[this.posicao.x][this.posicao.y] == Celula.HEROI) {
       if(grid[lin_adversaria][col_adversaria] == Celula.INIMIGO) {
           return true;
@@ -107,7 +107,7 @@ public class Equipe {
     return false;
   }
   
-  public boolean podeMovimentar(){
+  public boolean pode_movimentar(){
   if(millis() - ultimo_movimento < cooldown) { return false; }
   
   ultimo_movimento = millis();

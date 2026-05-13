@@ -8,7 +8,7 @@ public class Heroi extends Personagem {
     assert(botoes_selecao_habilidade != null);
     
     for (int i = 0; i < 3; i++) {
-      if (botoes_selecao_habilidade[i].clicarBotao() && habilidades[i].get_cooldown() == 0) {
+      if (botoes_selecao_habilidade[i].botao_clicado() && habilidades[i].get_cooldown() == 0) {
         Habilidade escolhida = habilidades[i];
         botoes_selecao_habilidade = null;
         return escolhida;
@@ -85,11 +85,11 @@ public class Heroi extends Personagem {
     assert(botoes_selecao_alvo != null
       && alvos_possiveis != null);
     
-    if(botoes_selecao_alvo[0].clicarBotao())
+    if(botoes_selecao_alvo[0].botao_clicado())
       return alvos_possiveis[0];
-    else if(botoes_selecao_alvo[1].clicarBotao())
+    else if(botoes_selecao_alvo[1].botao_clicado())
       return alvos_possiveis[1];
-    else if(botoes_selecao_alvo[2].clicarBotao())
+    else if(botoes_selecao_alvo[2].clicou_botao())
       return alvos_possiveis[2];
     
     return null;
