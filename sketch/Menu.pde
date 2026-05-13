@@ -51,9 +51,9 @@ public class Menu{
       super.desenhar_botao();
       
       fill(255, 255, 255);
-      triangle(eixoX + 2 * comprimento / 5, eixoY + altura / 4,     // Ponto 1
-               eixoX + 2 * comprimento / 5, eixoY + 3 * altura / 4, // Ponto 2
-               eixoX + 3 * comprimento / 5, eixoY + altura / 2);    // Ponto 3
+      triangle(eixo_x + 2 * comprimento / 5, eixo_y + altura / 4,     // Ponto 1
+               eixo_x + 2 * comprimento / 5, eixo_y + 3 * altura / 4, // Ponto 2
+               eixo_x + 3 * comprimento / 5, eixo_y + altura / 2);    // Ponto 3
     }
   }
   
@@ -67,10 +67,10 @@ public class Menu{
       
       // X:
       stroke(255);
-      line(eixoX + comprimento / 5, eixoY + altura / 5,          // Ponto 1 - linha 1
-           eixoX + comprimento * 4 / 5, eixoY + altura * 4 / 5); // Ponto 2 - linha 1
-      line(eixoX + comprimento / 5, eixoY + altura * 4 /5,       // Ponto 1 - linha 2
-           eixoX + comprimento * 4 / 5, eixoY + altura / 5);     // Ponto 2 - linha 2
+      line(eixo_x + comprimento / 5, eixo_y + altura / 5,          // Ponto 1 - linha 1
+           eixo_x + comprimento * 4 / 5, eixo_y + altura * 4 / 5); // Ponto 2 - linha 1
+      line(eixo_x + comprimento / 5, eixo_y + altura * 4 /5,       // Ponto 1 - linha 2
+           eixo_x + comprimento * 4 / 5, eixo_y + altura / 5);     // Ponto 2 - linha 2
     }
   }
   
@@ -85,7 +85,7 @@ public class Menu{
      fill(255);
      textSize(75);
      
-     text("Como jogar?", eixoX + (comprimento / 2), eixoY + (altura * 2 / 3));
+     text("Como jogar?", eixo_x + (comprimento / 2), eixo_y + (altura * 2 / 3));
    }
   }
 }

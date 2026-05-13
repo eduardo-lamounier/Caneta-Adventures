@@ -34,15 +34,14 @@ public int turnos_dot = 0;
     for(int i = 0; i < 3; i++)
       if(habilidades[i].get_cooldown() > 0)
         habilidades[i].decrementar_cooldown();
-        
-        if(turnos_dot > 0) {
-    ferir(dano_dot);
-    turnos_dot--;
-    println(get_nome() + " sofreu " + dano_dot + " de dano de queimadura!");
+
+    if(turnos_dot > 0) {
+      ferir(dano_dot);
+      turnos_dot--;
+      println(get_nome() + " sofreu " + dano_dot + " de dano de queimadura!");
+    }
   }
-}
-  }
-  
+
   public abstract void escolher_habilidade();
   public abstract Habilidade obter_habilidade_escolhida();
   

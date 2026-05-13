@@ -14,9 +14,9 @@ public class Estocar extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
     alvo.ferir(usuario.get_atk() + 5 * usuario.multiplicador_dano);
-  usuario.multiplicador_dano = 1;
+    usuario.multiplicador_dano = 1;
   }
-  
+
   public Estocar() {
     super(2, "Estocar", "Infringe 4pts base de dano", 3, false);
   }
@@ -37,11 +37,11 @@ public class BolaFogo extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
     alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
-  usuario.multiplicador_dano = 1;
+    usuario.multiplicador_dano = 1;
     alvo.dano_dot = 3;
     alvo.turnos_dot = 3;
   }
-  
+
   public BolaFogo() {
     super(4, "Bola de fogo", "Infringe 3pts base de dano e 3pts por 3 turnos", 6, false);
   }
@@ -61,13 +61,12 @@ public class Canetada extends Habilidade {
   protected void uso(Personagem usuario, Personagem alvo) {
     usuario.multiplicador_dano = 1;
     if(usuario.get_vel() > alvo.get_vel()){
-    alvo.ferir(usuario.get_atk() + 10);
+      alvo.ferir(usuario.get_atk() + 10);
     } else {
-    alvo.ferir(usuario.get_atk());
-    }
+      alvo.ferir(usuario.get_atk());
     }
   }
-  
+
   public Canetada() {
     super(6, "Canetada", "Se for mais rápido que o alvo, causa 10pts a mais de dano", 3, false);
   }

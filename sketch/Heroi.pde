@@ -89,7 +89,7 @@ public class Heroi extends Personagem {
       return alvos_possiveis[0];
     else if(botoes_selecao_alvo[1].botao_clicado())
       return alvos_possiveis[1];
-    else if(botoes_selecao_alvo[2].clicou_botao())
+    else if(botoes_selecao_alvo[2].botao_clicado())
       return alvos_possiveis[2];
     
     return null;

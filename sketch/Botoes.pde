@@ -1,7 +1,7 @@
 
 public class Botao{
   protected float eixo_x;
-  protected float eixo_x;
+  protected float eixo_y;
   protected float comprimento;
   protected float altura;
   protected color cor;
@@ -9,15 +9,15 @@ public class Botao{
   
   public Botao(float eixo_x, float eixo_y, float comprimento, float altura, color cor){
     this.eixo_x = eixo_x;
-    this.eixo_y = eixo_x;
+    this.eixo_y = eixo_y;
     this.comprimento = comprimento;
     this.altura = altura;
     this.cor = cor;
   }
   
   public boolean mouse_em_cima(){
-      if(mouseX > eixoX && mouseX < (eixoX + comprimento)
-      && mouseY > eixoY && mouseY < (eixoY + altura))
+      if(mouseX > eixo_x && mouseX < (eixo_x + comprimento)
+      && mouseY > eixo_y && mouseY < (eixo_y + altura))
         return true;
         
       return false;
@@ -36,7 +36,7 @@ public class Botao{
     float altura_atual = altura * escala;
 
     float x_atual = eixo_x - (largura_atual - comprimento)/2;
-    float y_atual = eixo_x - (altura_atual - altura)/2;
+    float y_atual = eixo_y - (altura_atual - altura)/2;
     // frufrus
     fill(0, 70);
     rect(
@@ -55,10 +55,10 @@ public class Botao{
     else
     fill(cor);
     rect(
-      xAtual,
-      yAtual,
-      larguraAtual,
-      alturaAtual,
+      x_atual,
+      y_atual,
+      largura_atual,
+      altura_atual,
       18
     );
   }
@@ -104,11 +104,11 @@ public class BotaoTexto extends Botao {
 
 
     textSize(tamanho_texto);
-    text(texto, eixoX + (comprimento / 2), eixoY + (altura * 1 / 3));
+    text(texto, eixo_x + (comprimento / 2), eixo_y + (altura * 1 / 3));
 
     fill(220);
     textSize(tamanho_texto - 10);
-    text(descricao, eixoX + (comprimento / 2), eixoY + (altura * 2 / 3));
+    text(descricao, eixo_x + (comprimento / 2), eixo_y + (altura * 2 / 3));
   }
 }
 
