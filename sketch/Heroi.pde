@@ -7,25 +7,27 @@ public class Heroi extends Personagem {
   public Habilidade obter_habilidade_escolhida() {
     assert(botoes_selecao_habilidade != null);
     
-    if(botoes_selecao_habilidade[0].clicarBotao())
-      return habilidades[0];
-    else if(botoes_selecao_habilidade[1].clicarBotao())
-      return habilidades[1];
-    else if(botoes_selecao_habilidade[2].clicarBotao())
-      return habilidades[2];
+    for (int i = 0; i < 3; i++) {
+      if (botoes_selecao_habilidade[i].clicarBotao() && habilidades[i].get_cooldown() == 0) {
+        Habilidade escolhida = habilidades[i];
+        botoes_selecao_habilidade = null;
+        return escolhida;
+      }
+    }
     
     return null;
   }
   
   @Override
   public void escolher_habilidade() {
+    if (botoes_selecao_habilidade != null) return;
     botoes_selecao_habilidade = new BotaoTexto[3];
     
-    int margem_x = 100;
+    int margem_x = 120;
     int margem_y = 100;
     int separacao_y = 10;
-    int comprimento = 150;
-    int altura = 50;
+    int comprimento = 320;
+    int altura = 95;
     int tamanho_texto = 30;
     color cor_fundo = color(#5A5A58);
     color cor_texto = color(#FFFFFF);
@@ -33,25 +35,27 @@ public class Heroi extends Personagem {
     for(int i = 0; i < 3; i++) {
       botoes_selecao_habilidade[i] = new BotaoTexto(
         margem_x, 
-        i*margem_y + (i-1)*separacao_y,
+        margem_y + i * (altura + separacao_y),
         comprimento,
         altura,
-        habilidades[i].get_nome() + "\n" + habilidades[i].get_descricao(),
+        habilidades[i].get_nome(),
+        habilidades[i].get_descricao(),
         tamanho_texto,
         cor_texto,
         cor_fundo
       );
-      
-      botoes_selecao_habilidade[i].desenharBotao();
     }
   }
   
+  public BotaoTexto[] get_botoes_habilidade() { return botoes_selecao_habilidade; }
+  
   @Override
   public void escolher_alvo(Personagem[] alvos_possiveis) {
+    if (botoes_selecao_alvo != null) return;
     botoes_selecao_alvo = new BotaoTexto[3];
     this.alvos_possiveis = alvos_possiveis;
     
-    int margem_x = 200;
+    int margem_x = 450;
     int margem_y = 100;
     int separacao_y = 10;
     int comprimento = 150;
@@ -63,18 +67,18 @@ public class Heroi extends Personagem {
     for(int i = 0; i < 3; i++) {
       botoes_selecao_alvo[i] = new BotaoTexto(
         margem_x, 
-        i*margem_y + (i-1)*separacao_y,
+        margem_y + i * (altura + separacao_y),
         comprimento,
         altura,
-        alvos_possiveis[i].get_nome(),
+        alvos_possiveis[i].get_nome(), "",
         tamanho_texto,
         cor_texto,
         cor_fundo
       );
-      
-      botoes_selecao_alvo[i].desenharBotao();
     }
   }
+  
+  public BotaoTexto[] get_botoes_alvo() { return botoes_selecao_alvo; }
   
   @Override
   public Personagem obter_alvo_escolhido() {

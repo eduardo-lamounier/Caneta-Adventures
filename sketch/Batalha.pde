@@ -18,8 +18,13 @@ public class Batalha {
   private int turno_atual;
   private EstadoTurno estado_atual;
   
+  private int espera = -1;
+  private int duracao_espera = 0;
+  private boolean uso_habilidade_executado = false;
+  
   // Retorna 0 se a batalha não tiver em progresso
   public int get_turno_atual() { return turno_atual; }
+  public EstadoTurno get_estado_atual() { return estado_atual; }
 
   private void ordenar_fila() {
     for(int i = 0; i < 6; i++) {
@@ -45,38 +50,81 @@ public class Batalha {
     }
   }
   
-  private void desenhar_fundo_batalha() {
-  
+  public void desenhar_interface() {
+  if (atacante_atual < 0) return;
+  Personagem atacante = fila_turnos[atacante_atual];
+  if (!(atacante instanceof Heroi)) return;
+  Heroi heroi = (Heroi) atacante;
+
+  switch (estado_atual) {
+      case OBTER_ESCOLHA_HABILIDADE:
+        desenhar_botoes(heroi.get_botoes_habilidade());
+        break;
+      case OBTER_ESCOLHA_ALVO:
+        desenhar_botoes(heroi.get_botoes_alvo());
+        break;
+    }
   }
   
   public boolean deve_finalizar() {
-    return false; // IMPLEMENTAR
+    boolean heroi_vivo = false;
+    boolean inimigo_vivo = false;
+    for(int i = 0; i < 6; i++) {
+    if(fila_turnos[i].esta_vivo()) {
+      if(personagem_fila_turnos_herois[i]) heroi_vivo = true;
+      else inimigo_vivo = true;
+    }
+  }
+  
+  return !heroi_vivo || !inimigo_vivo;
+  }
+ 
+  private boolean esperando(){
+    if(espera == -1) return false;
+    if(millis() - espera >= duracao_espera){
+      espera = -1;
+      return false;
+    }
+    return true;
+  }
+  private void iniciar_espera(int ms){
+    espera = millis();
+    duracao_espera = ms;
   }
   
   public void avancar() {
+    if (esperando()) return;
     if(estado_atual == EstadoTurno.ESCOLHA_HABILIDADE) {
       turno_atual++;
       atacante_atual = (atacante_atual + 1) % 6;
     }
     
     Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
-    println("turno de: " + personagem_atacante_atual.get_nome());
     boolean personagem_atual_heroi =
       personagem_fila_turnos_herois[atacante_atual];
     
     switch(estado_atual) {
       case ESCOLHA_HABILIDADE:
-        personagem_atacante_atual.decrementar_cooldowns();
-          
+      println("turno de: " + personagem_atacante_atual.get_nome());
+      personagem_atacante_atual.decrementar_cooldowns();
         personagem_atacante_atual.escolher_habilidade();
         estado_atual = EstadoTurno.OBTER_ESCOLHA_HABILIDADE;
+
+        if (!personagem_atual_heroi) iniciar_espera(1500);
         break;
       case OBTER_ESCOLHA_HABILIDADE:
+        if(!personagem_atual_heroi && !esperando()) {
         habilidade_escolhida = personagem_atacante_atual.obter_habilidade_escolhida();
-        
-        if(habilidade_escolhida != null)
-          estado_atual = EstadoTurno.ESCOLHA_ALVO;
-        break;
+        if(habilidade_escolhida != null) {
+        iniciar_espera(1500);
+        estado_atual = EstadoTurno.ESCOLHA_ALVO;
+    }
+  } else if(personagem_atual_heroi) {
+    habilidade_escolhida = personagem_atacante_atual.obter_habilidade_escolhida();
+    if(habilidade_escolhida != null)
+    estado_atual = EstadoTurno.ESCOLHA_ALVO;
+  }
+  break;
       case ESCOLHA_ALVO:
         Personagem[] oponentes = new Personagem[3];
         
@@ -84,7 +132,7 @@ public class Batalha {
       
         // Busca os oponentes (de forma infelizmente nada funcional)
         for(int i = 0; i < 6; i++) {
-          if(personagem_fila_turnos_herois[i] != personagem_atual_heroi)
+          if(personagem_fila_turnos_herois[i] != personagem_atual_heroi && fila_turnos[i].esta_vivo())
             oponentes[o++] = fila_turnos[i];
         }
         
@@ -99,19 +147,24 @@ public class Batalha {
           estado_atual = EstadoTurno.USO_HABILIDADE;
         break;
       case USO_HABILIDADE:
-        habilidade_escolhida.usar(personagem_atacante_atual, alvo_escolhido);
-        println(personagem_atacante_atual.get_nome()+"-"+atacante_atual
-          + " usou " + habilidade_escolhida.get_nome()
-          + " em " + alvo_escolhido.get_nome()
-        );
-        if(habilidade_escolhida.altera_velocidade())
-          ordenar_fila();
-          
-        delay(3000);
-        estado_atual = EstadoTurno.ESCOLHA_HABILIDADE;
-        break;
+        if (!uso_habilidade_executado) {
+          habilidade_escolhida.usar(personagem_atacante_atual, alvo_escolhido);
+          println(personagem_atacante_atual.get_nome()
+            + " usou " + habilidade_escolhida.get_nome()
+            + " em " + alvo_escolhido.get_nome());
+
+          if (habilidade_escolhida.altera_velocidade())
+            ordenar_fila();
+
+          uso_habilidade_executado = true;
+      iniciar_espera(3000);
+    } else {
+      uso_habilidade_executado = false;
+      estado_atual = EstadoTurno.ESCOLHA_HABILIDADE;
     }
+      break;
   }
+    }
 
   public Batalha(Equipe herois, Equipe inimigos) {
     turno_atual = 0;

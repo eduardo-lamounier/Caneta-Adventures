@@ -10,10 +10,10 @@ public class Menu{
   
   public void desenhar(){
   // Background:
-    background(#194574);
+    background(#0B132B);
     
   // Título:
-    fill(255, 255, 0);
+    fill(#FFD166);
     
     textAlign(CENTER);
     textFont(titulo);

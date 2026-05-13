@@ -27,7 +27,7 @@ public class Agilidade extends Habilidade {
   }
   
   public Agilidade() {
-    super(3, "Agilidade", "Aumenta a velocidade do usuário em 10pts base", 3, true);
+    super(3, "Agilidade", "Aumenta a velocidade do \n usuário em 10pts base", 3, true);
   }
 }
 

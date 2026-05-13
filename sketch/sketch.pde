@@ -47,8 +47,13 @@ void draw(){
       break;
     
     case BATALHA:
+    background(30);
       batalha.avancar();
-      break;
+      batalha.desenhar_interface();
+  
+      if (batalha.deve_finalizar())
+      estado = Estado.EXPLORACAO;
+  break;
       
     case FINAL:
       break;

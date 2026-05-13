@@ -4,7 +4,6 @@ public class Inimigo extends Personagem {
   
   @Override
   public void escolher_habilidade() {
-    delay(2000);
     int escolha;
     
     // Isso não será um loop infinito porque todo personagem tem uma habilidade
@@ -24,12 +23,12 @@ public class Inimigo extends Personagem {
   
   @Override
   public void escolher_alvo(Personagem[] alvos_possiveis) {
-    alvo_escolhido = alvos_possiveis[(int)random(3)];
+    do{alvo_escolhido = alvos_possiveis[(int)random(3)];
+    }while (!alvo_escolhido.esta_vivo());
   }
   
   @Override
   public Personagem obter_alvo_escolhido() {
-    delay(2000);
     return alvo_escolhido;
   }
   
