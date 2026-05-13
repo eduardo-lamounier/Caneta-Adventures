@@ -1,6 +1,6 @@
 public class CanetaAzul extends TipoPersonagem {
   public CanetaAzul() {
-    super(3, "Caneta Azul", ".png");
+    super(3, "Caneta Azul", "Manoel_Guerreiro.png");
   }
   
   @Override
@@ -19,7 +19,7 @@ public class CanetaAzul extends TipoPersonagem {
   }
   @Override
   public Habilidade[] gerar_habilidades() {
-    return new Habilidade[] { new Golpear(), new Estocar(), new Agilidade() };
+    return new Habilidade[] { new Golpear(), new ReporTinta(), new Agilidade() };
   }
 }
   
@@ -44,13 +44,13 @@ public class CanetaAzul extends TipoPersonagem {
   }
   @Override
   public Habilidade[] gerar_habilidades() {
-    return new Habilidade[] { new Golpear(), new Estocar(), new Agilidade() };
+    return new Habilidade[] { new Golpear(), new BolaFogo(), new Agilidade() };
   }
   }
   
   public class CanetaRoubada extends TipoPersonagem {
   public CanetaRoubada() {
-    super(5, "Caneta Roubada", ".png");
+    super(5, "Caneta Roubada", "Manoel_assassino.png");
   }
   
   @Override
