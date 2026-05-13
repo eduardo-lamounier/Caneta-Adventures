@@ -46,29 +46,53 @@ public class Batalha {
     final int margem_x_sprites = 50;
     final int margem_y_sprites = 75;
     final int espacamento_y_sprites = 70;
+    final int tamanho_sprite = 50;
 
-    // desenha sprites: =======================================
+    final int margem_x_hp = 40;
+    final int comprimento_hp = 150;
+    final int altura_hp = (int)tamanho_sprite * 1/3;
+    final color cor_fundo_hp = color(#343232);
+    final color cor_texto_hp = color(#38D30B);
+
     for(int i = 0; i < 3; i++) {
+      // desenha sprites: =======================================
+
       image(
         herois[i].get_sprite(),
         margem_x_sprites,
         height - margem_y_sprites - espacamento_y_sprites * (3-i-1),
-        50,
-        50
+        tamanho_sprite,
+        tamanho_sprite
       );
       
       image(
         inimigos[i].get_sprite(),
-        width - margem_x_sprites - 50,
+        width - margem_x_sprites - tamanho_sprite,
         margem_y_sprites + espacamento_y_sprites * (i),
-        50,
-        50
+        tamanho_sprite,
+        tamanho_sprite
+      );
+
+      // desenha barras de hp: =====================================
+
+      fill(cor_fundo_hp);
+      
+      rect(
+        margem_x_sprites + tamanho_sprite + margem_x_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        comprimento_hp,
+        altura_hp,
+        15
+      );
+
+      rect(
+        width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
+        margem_y_sprites + espacamento_y_sprites * i,
+        comprimento_hp,
+        altura_hp,
+        15
       );
     }
-
-    // desenha barras de hp: =====================================
-
-    // Fazer aqui
 
     // seleção de habilidade ou alvos: ============================
     if (atacante_atual < 0) return;
