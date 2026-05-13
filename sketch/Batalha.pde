@@ -75,6 +75,26 @@ public class Batalha {
         tamanho_sprite
       );
 
+      // sprites de morte para inimigos mortos por cima:
+      
+      if(!herois[i].esta_vivo())
+        image(
+          loadImage("death.png"),
+          margem_x_sprites,
+          height - margem_y_sprites - espacamento_y_sprites * (3-i-1),
+          tamanho_sprite,
+          tamanho_sprite
+        );
+
+      if(!inimigos[i].esta_vivo())
+        image(
+          loadImage("death.png"),
+          width - margem_x_sprites - tamanho_sprite,
+          margem_y_sprites + espacamento_y_sprites * (i),
+          tamanho_sprite,
+          tamanho_sprite
+        );
+
       // desenha barras de hp: =====================================
 
       fill(cor_fundo_hp);
