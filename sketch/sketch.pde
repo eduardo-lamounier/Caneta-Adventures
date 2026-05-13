@@ -53,8 +53,12 @@ void draw(){
       batalha.avancar();
       batalha.desenhar();
 
-      if (batalha.deve_finalizar())
+      if (batalha.deve_finalizar()) {
         estado = Estado.EXPLORACAO;
+
+        if(batalha.herois_sairam_vitoriosos())
+          equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
+      }
   break;
       
     case FINAL:
@@ -163,6 +167,8 @@ void colisao(){
   
   int nivel_inimigos = (int)random(nivel_inimigo_min, nivel_inimigo_max+1);
   
+  int xp = (int)random(75, 150+1);
+
   Equipe inimigos = new Equipe(
     equipe_jogador.get_posicao(),
     inimigo_aleatorio(nivel_inimigos),
@@ -170,7 +176,7 @@ void colisao(){
     inimigo_aleatorio(nivel_inimigos)
   );
   
-  batalha = new Batalha(equipe_jogador, inimigos);
+  batalha = new Batalha(equipe_jogador, inimigos, xp);
 }
 
 void desenhar_heroi(){

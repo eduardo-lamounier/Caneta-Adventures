@@ -22,8 +22,19 @@ public class Batalha {
   private int duracao_espera = 0;
   private boolean uso_habilidade_executado = false;
   
+  private int xp_vitoria;
+
+  public int get_xp_vitoria() { return xp_vitoria; }
   public int get_turno_atual() { return turno_atual; }
   public EstadoTurno get_estado_atual() { return estado_atual; }
+
+  public boolean herois_sairam_vitoriosos() {
+    for(Inimigo inimigo : inimigos) {
+      if(inimigo.esta_vivo())
+        return false;
+    }
+    return true;
+  }
 
   private void ordenar_fila() {
     for(int i = 0; i < 6; i++) {
@@ -74,6 +85,26 @@ public class Batalha {
         tamanho_sprite,
         tamanho_sprite
       );
+
+      // sprites de morte para inimigos mortos por cima:
+      
+      if(!herois[i].esta_vivo())
+        image(
+          loadImage("death.png"),
+          margem_x_sprites,
+          height - margem_y_sprites - espacamento_y_sprites * (3-i-1),
+          tamanho_sprite,
+          tamanho_sprite
+        );
+
+      if(!inimigos[i].esta_vivo())
+        image(
+          loadImage("death.png"),
+          width - margem_x_sprites - tamanho_sprite,
+          margem_y_sprites + espacamento_y_sprites * (i),
+          tamanho_sprite,
+          tamanho_sprite
+        );
 
       // desenha barras de hp: =====================================
 
@@ -291,10 +322,11 @@ public class Batalha {
     }
   }
 
-  public Batalha(Equipe herois, Equipe inimigos) {
+  public Batalha(Equipe herois, Equipe inimigos, int xp_vitoria) {
     turno_atual = 0;
     estado_atual = EstadoTurno.ESCOLHA_HABILIDADE;
     atacante_atual = -1;
+    this.xp_vitoria = xp_vitoria;
     habilidade_escolhida = null;
     alvo_escolhido = null;
     this.herois = (Heroi[])herois.get_personagens();
