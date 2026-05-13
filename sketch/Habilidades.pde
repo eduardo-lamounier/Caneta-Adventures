@@ -2,11 +2,18 @@ public class Golpear extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
     alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
-  usuario.multiplicador_dano = 1;
+    usuario.multiplicador_dano = 1;
   }
-  
+
   public Golpear() {
-    super(1, "Golpear", "Infringe o ATK do usuario de dano", 0, false);
+    super(
+      1, 
+      "Golpear",
+      "Infringe o ATK do usuario de dano", 
+      0, 
+      false, 
+      TipoMiraHabilidade.MIRA_OPONENTE
+    );
   }
 }
 
@@ -18,7 +25,14 @@ public class Estocar extends Habilidade {
   }
 
   public Estocar() {
-    super(2, "Estocar", "Infringe o ATK do usuario + 5 x seu multiplicador de dano", 2, false);
+    super(
+      2,
+      "Estocar", 
+      "Infringe o ATK do usuario + 5 x seu multiplicador de dano", 
+      2, 
+      false,
+      TipoMiraHabilidade.MIRA_OPONENTE
+    );
   }
 }
 
@@ -29,7 +43,14 @@ public class Agilidade extends Habilidade {
   }
   
   public Agilidade() {
-    super(3, "Agilidade", "Aumenta a velocidade do \n usuário em 10pts base", 3, true);
+    super(
+      3,
+      "Agilidade", 
+      "Aumenta a velocidade do \n usuário em 10pts base", 
+      3, 
+      true,
+      TipoMiraHabilidade.NAO_MIRA
+    );
   }
 }
 
@@ -43,7 +64,14 @@ public class BolaFogo extends Habilidade {
   }
 
   public BolaFogo() {
-    super(4, "Bola de fogo", "Infringe 3pts base de dano e 3pts por 3 turnos", 5, false);
+    super(
+      4,
+      "Bola de fogo", 
+      "Infringe 3pts base de dano e 3pts por 3 turnos", 
+      5, 
+      false,
+      TipoMiraHabilidade.MIRA_OPONENTE
+    );
   }
 }
 public class ReporTinta extends Habilidade {
@@ -53,7 +81,14 @@ public class ReporTinta extends Habilidade {
   }
   
   public ReporTinta() {
-    super(5, "Repor Tinta", "Quadriplica o dano no próximo ataque", 3, false);
+    super(
+      5, 
+      "Repor Tinta", 
+      "Quadriplica o dano no próximo ataque", 
+      3, 
+      false,
+      TipoMiraHabilidade.NAO_MIRA
+    );
   }
 }
 public class Canetada extends Habilidade {
@@ -69,7 +104,14 @@ public class Canetada extends Habilidade {
   }
 
   public Canetada() {
-    super(6, "Canetada", "Causa o ATK do usuario de dano, se for mais rapido + 10.", 2, false);
+    super(
+      6, 
+      "Canetada",
+      "Causa o ATK do usuario de dano, se for mais rapido + 10.", 
+      2, 
+      false,
+      TipoMiraHabilidade.MIRA_OPONENTE
+    );
   }
 }
 public class CantarOuCompor extends Habilidade {
@@ -77,13 +119,21 @@ public class CantarOuCompor extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
     usuario.multiplicador_dano = 2;
-      alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
-      usuario.incrementar_vel(10);
+    alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
+    usuario.incrementar_vel(10);
     usuario.multiplicador_dano = 1;
   }
 
   public CantarOuCompor() {
-    super(7, "Cantar ou Compor", "Os dois né. Causa o ATK do usuario de dano, aumenta a velocidade 10pts e aumenta o multplicador para 2x", 4, false);
+    super(
+      7, 
+      "Cantar ou Compor", 
+      "Os dois né. Causa o ATK do usuario de dano, aumenta a velocidade"
+        + "10pts e aumenta o multplicador para 2x", 
+      4,
+      false,
+      TipoMiraHabilidade.MIRA_OPONENTE
+    );
   }
 }
 public class Assobiar extends Habilidade {
@@ -94,6 +144,13 @@ public class Assobiar extends Habilidade {
   }
 
   public Assobiar() {
-    super(8, "Assobiar", "Cura o alvo com base no ATK do usuário.", 2, true);
+    super(
+      8, 
+      "Assobiar", 
+      "Cura o alvo com base no ATK do usuário.", 
+      2, 
+      true,
+      TipoMiraHabilidade.MIRA_ALIADO
+    );
   }
 }

@@ -203,13 +203,14 @@ public class Batalha {
       final int margem_x_uso_habilidade = width / 2;
       final int margem_y_uso_habilidade = height / 2;
 
-      textSize(tamanho_texto_uso_habilidade);
-      text(
+      String texto_de_uso = alvo_escolhido != null ?
         fila_turnos[atacante_atual].get_nome() + " usou " + habilidade_escolhida.get_nome()
-        + " em " + alvo_escolhido.get_nome() + "!!",
-        margem_x_uso_habilidade,
-        margem_y_uso_habilidade
-      );
+          + " em " + alvo_escolhido.get_nome() + "!!"
+        :
+        fila_turnos[atacante_atual].get_nome() + " usou " + habilidade_escolhida.get_nome() + "!!";
+
+      textSize(tamanho_texto_uso_habilidade);
+      text(texto_de_uso, margem_x_uso_habilidade, margem_y_uso_habilidade);
     }
 
     // seleção de habilidade ou alvos: ============================
@@ -294,10 +295,18 @@ public class Batalha {
         }
         break;
       case ESCOLHA_ALVO:
-        Personagem[] oponentes = personagem_atacante_atual instanceof Heroi ?
-          inimigos : herois;
+        if(habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.NAO_MIRA) {
+          alvo_escolhido = null;
+          estado_atual = EstadoTurno.USO_HABILIDADE;
+          return;
+        }
+
+        Personagem[] alvos_possiveis = personagem_atacante_atual instanceof Heroi ?
+          habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_OPONENTE ? inimigos : herois
+          :
+          habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_OPONENTE ? herois : inimigos;
         
-        personagem_atacante_atual.escolher_alvo(oponentes);
+        personagem_atacante_atual.escolher_alvo(alvos_possiveis);
         estado_atual = EstadoTurno.OBTER_ESCOLHA_ALVO;
         break;
       case OBTER_ESCOLHA_ALVO:
