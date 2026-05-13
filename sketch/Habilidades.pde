@@ -57,14 +57,15 @@ public class ReporTinta extends Habilidade {
   }
 }
 public class Canetada extends Habilidade {
+  
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
-    usuario.multiplicador_dano = 1;
     if(usuario.get_vel() > alvo.get_vel()){
-      alvo.ferir(usuario.get_atk() + 10);
+      alvo.ferir(usuario.get_atk() + 10 * usuario.multiplicador_dano);
     } else {
-      alvo.ferir(usuario.get_atk());
+      alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
     }
+    usuario.multiplicador_dano = 1;
   }
 
   public Canetada() {
