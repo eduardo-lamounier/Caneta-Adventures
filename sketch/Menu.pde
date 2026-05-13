@@ -177,7 +177,6 @@ public class GameOver {
     text("Pressione M para voltar ao menu.", width / 2, 540);
     
     sair.desenhar_botao();
-    }
 
     // Mensagem
     fill(255, 200);
