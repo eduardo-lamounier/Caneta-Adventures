@@ -19,6 +19,7 @@ Equipe[] equipe_inimigo;
 
 Batalha batalha;
 Menu menu;
+Tutorial tutorial;
 
 void setup(){
   size(800,600);
@@ -34,6 +35,7 @@ void setup(){
   estado = Estado.MENU;
   inicializa_grid();
   menu = new Menu();
+  tutorial = new Tutorial();
 }
 
 void draw(){
@@ -68,12 +70,15 @@ void keyPressed(){
     if(key == ' ') { estado = Estado.EXPLORACAO; }
   }
   
-  if(estado == Estado.EXPLORACAO) { movimentar_heroi(); }
+  if(estado == Estado.EXPLORACAO) { 
+    movimentar_heroi();
   
-  switch(key) {
-    case 'M':
-    case 'm':
-      estado = Estado.MENU;
+    switch(key) {
+      case 'M':
+      case 'm':
+        estado = Estado.MENU;
+        break;
+    }
   }
 }
 
@@ -269,7 +274,3 @@ void desenha_menu(){
 void desenha_tutorial() { 
   tutorial.desenhar();
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb

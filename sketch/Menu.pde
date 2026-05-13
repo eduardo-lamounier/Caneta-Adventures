@@ -96,14 +96,9 @@ public class Menu {
     }
   }
 }
-public class GameOver {
-  private PFont titulo;
-  private BotaoReiniciar reiniciar;
-  private BotaoMenu voltarMenu;
-  private boolean vitoria;
+
+public class Tutorial extends Menu{
   
-<<<<<<< HEAD
-<<<<<<< HEAD
   protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
   
   @Override
@@ -111,52 +106,9 @@ public class GameOver {
     background(#0B132B);
     
     fill(#FFD166);
-    
     textAlign(CENTER);
-=======
-=======
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
-  public GameOver(boolean vitoria) {
-    this.vitoria = vitoria;
-    titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
+    text("Como jogar:", width / 2, 80);
     
-    reiniciar  = new BotaoReiniciar(width / 6,     height * 3 / 5, 4 * width / 6, height / 7, #BC7920);
-    voltarMenu = new BotaoMenu   (width / 6,     height * 3 / 4 + 10, 4 * width / 6, height / 7, #4A5568);
-  }
-  
-  public void desenhar() {
-    background(#0B132B);
-    
-    // Partículas de fundo
-    noStroke();
-    for (int i = 0; i < 40; i++) {
-      fill(vitoria ? color(#FFD166, 60) : color(#FF4444, 40));
-      float px = noise(i * 0.7, frameCount * 0.01) * width;
-      float py = noise(i * 0.7 + 50, frameCount * 0.01) * height;
-      ellipse(px, py, 5, 5);
-    }
-    
-    // Título Game Over / Vitória
-    textAlign(CENTER, CENTER);
-<<<<<<< HEAD
->>>>>>> 5ad4797b64f00ca0258a22990188ef96a433e761
-=======
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
-    textFont(titulo);
-    
-    // Sombra
-    fill(vitoria ? color(#BC7920, 120) : color(#8B0000, 120));
-    textSize(100);
-    text(vitoria ? "Vitória!" : "Game Over", width / 2 + 5, height / 4 + 5);
-    
-    // Texto principal
-    fill(vitoria ? #FFD166 : #FF4444);
-    text(vitoria ? "Vitória!" : "Game Over", width / 2, height / 4);
-    
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
   // Título:
     textFont(fonteCorpo); // sua fonte branca
     fill(255);
@@ -199,12 +151,24 @@ public class GameOver {
     text("Pressione M para voltar ao menu.", width / 2, 540);
     
     sair.desenhar_botao();
-<<<<<<< HEAD
     }
 }
 
 public class GameOver extends Menu {
+  private PFont titulo;
+  private BotaoReiniciar reiniciar;
+  private BotaoMenu voltarMenu;
+  private boolean vitoria;
+  
   protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
+  
+  public GameOver(boolean vitoria) {
+    this.vitoria = vitoria;
+    titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
+    
+    reiniciar  = new BotaoReiniciar(width / 6,     height * 3 / 5, 4 * width / 6, height / 7, #BC7920);
+    voltarMenu = new BotaoMenu   (width / 6,     height * 3 / 4 + 10, 4 * width / 6, height / 7, #4A5568);
+  }
   
   @Override
     void desenhar() {
@@ -246,10 +210,7 @@ public class GameOver extends Menu {
     fill(180);
     textSize(15);
     text("Obrigado por jogar!", width / 2, 540);
-=======
-=======
 
->>>>>>> 6aa43d8f87c04cbac9b19d03bb6104e1c3df8deb
     // Mensagem
     fill(255, 200);
     textSize(24);
@@ -297,6 +258,5 @@ public class GameOver extends Menu {
       textSize(36);
       text("⌂  Menu principal", eixo_x + comprimento / 2, eixo_y + altura / 2);
     }
->>>>>>> 5ad4797b64f00ca0258a22990188ef96a433e761
   }
 }
