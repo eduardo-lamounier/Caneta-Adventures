@@ -14,7 +14,8 @@ public abstract class Personagem {
   public int get_id() { return tipo_personagem.get_id(); }
   public String get_nome() { return tipo_personagem.get_nome(); }
   public PImage get_sprite() { return tipo_personagem.get_sprite(); }
-  
+ 
+  public float get_vida_max() { return vida_max; }
   public float get_vida_atual() { return vida_atual; }
   public int get_vel() { return vel; }
   public float get_atk() { return atk; }
