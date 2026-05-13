@@ -52,7 +52,8 @@ public class Batalha {
     final int comprimento_hp = 150;
     final int altura_hp = (int)tamanho_sprite * 1/3;
     final color cor_fundo_hp = color(#343232);
-    final color cor_texto_hp = color(#38D30B);
+    final color cor_texto_hp = color(#ffffff);
+    final color cor_barra_hp = color(#38D30B);
 
     for(int i = 0; i < 3; i++) {
       // desenha sprites: =======================================
@@ -89,6 +90,26 @@ public class Batalha {
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
         margem_y_sprites + espacamento_y_sprites * i,
         comprimento_hp,
+        altura_hp,
+        15
+      );
+
+      fill(cor_barra_hp);
+      float razao_vida_heroi = herois[i].get_vida_atual() / herois[i].get_vida_max();
+      float razao_vida_inimigo = inimigos[i].get_vida_atual() / inimigos[i].get_vida_max();
+
+      rect(
+        margem_x_sprites + tamanho_sprite + margem_x_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        (int)comprimento_hp * razao_vida_heroi,
+        altura_hp,
+        15
+      );
+
+      rect(
+        width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp,
+        margem_y_sprites + espacamento_y_sprites * i,
+        (int)comprimento_hp * razao_vida_inimigo,
         altura_hp,
         15
       );
