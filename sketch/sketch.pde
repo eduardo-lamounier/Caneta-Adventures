@@ -4,7 +4,7 @@ Estado estado;
 enum Celula {GRAMA, PEDRA, INIMIGO, HEROI};
 Celula[][] grid;
 
-PImage[][] gridImage;
+PImage[][] imagens_grid;
 int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 
@@ -12,8 +12,8 @@ Equipe equipe_jogador;
 int nivel_heroi = 1;
 
 int quant_inimigo = 5;
-PImage[] inimigoImage;
-PosicaoDTO[] posInimigos; 
+PImage[] imagens_inimigos;
+PosicaoDTO[] pos_inimigos; 
 // Linhas e colunas onde os inimigos estão
 Equipe[] equipe_inimigo;
 
@@ -32,38 +32,37 @@ void setup(){
   );
   
   estado = Estado.MENU;
-  inicializaGrid();
+  inicializa_grid();
   menu = new Menu();
 }
 
 void draw(){
   switch(estado) {
     case MENU:
-      desenhaMenu();
+      desenha_menu();
       break;
       
     case EXPLORACAO:
-      mostraGrid();
+      mostra_grid();
       break;
     
     case BATALHA:
-    background(30);
+      background(30);
       batalha.avancar();
       batalha.desenhar();
-  
+
       if (batalha.deve_finalizar())
-      estado = Estado.EXPLORACAO;
+        estado = Estado.EXPLORACAO;
   break;
       
     case FINAL:
       break;
-      
+
     default:
       break;
   }
 }
 
-// exit()
 void keyPressed(){
   if(estado == Estado.MENU) { 
     if(key == ' ') { estado = Estado.EXPLORACAO; }
@@ -180,30 +179,30 @@ void desenhar_inimigo(){
   float h = height/(float)n;
   
   for(int i = 0; i < quant_inimigo; i++) {
-        image(inimigoImage[i], int(posInimigos[i].y) * l, int(posInimigos[i].x) * h, l, h);
+        image(imagens_inimigos[i], int(pos_inimigos[i].y) * l, int(pos_inimigos[i].x) * h, l, h);
   }
   
   movimentar_inimigo();
 }
 
-void inicializaGrid(){
-  gridImage = new PImage[n][m];
+void inicializa_grid(){
+  imagens_grid = new PImage[n][m];
   grid = new Celula[n][m];
   
-  posInimigos = new PosicaoDTO[quant_inimigo];
-  inimigoImage = new PImage[quant_inimigo];
+  pos_inimigos = new PosicaoDTO[quant_inimigo];
+  imagens_inimigos = new PImage[quant_inimigo];
   equipe_inimigo = new Equipe[quant_inimigo];
   
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
       if(random(1) >= 0.1){
-        gridImage[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+        imagens_grid[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
         grid[i][j] = Celula.GRAMA;
       }
       
       else {
         if(i != equipe_jogador.posicao.x || j != equipe_jogador.posicao.y) {
-          gridImage[i][j] = loadImage("pedra.png");
+          imagens_grid[i][j] = loadImage("pedra.png");
           grid[i][j] = Celula.PEDRA;
         }
         
@@ -215,26 +214,26 @@ void inicializaGrid(){
   grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = Celula.HEROI;
   
   for(int i = 0; i < quant_inimigo; i++){
-    posInimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
+    pos_inimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
     
-    if(grid[int(posInimigos[i].x)][int(posInimigos[i].y)] != Celula.GRAMA) { 
+    if(grid[int(pos_inimigos[i].x)][int(pos_inimigos[i].y)] != Celula.GRAMA) { 
       i--; }  
     
     else {
       equipe_inimigo[i] = new Equipe(
-        posInimigos[i],
+        pos_inimigos[i],
         inimigo_aleatorio(1),
         inimigo_aleatorio(1),
         inimigo_aleatorio(1)
       );
       
-      grid[int(posInimigos[i].x)][int(posInimigos[i].y)] = Celula.INIMIGO; 
-      inimigoImage[i] = loadImage("inimigo" + str(int(random(1, 2+1))) + ".png");
+      grid[int(pos_inimigos[i].x)][int(pos_inimigos[i].y)] = Celula.INIMIGO; 
+      imagens_inimigos[i] = loadImage("inimigo" + str(int(random(1, 2+1))) + ".png");
     }
   }
 }
 
-void mostraGrid(){
+void mostra_grid(){
   float l = width/(float)m;
   float h = height/(float)n;
   
@@ -242,7 +241,7 @@ void mostraGrid(){
     for(int j = 0; j < m; j++){
       stroke(200);
       fill(255,255,255);
-      image(gridImage[i][j], j*l, i*h, l, h);
+      image(imagens_grid[i][j], j*l, i*h, l, h);
     }
   }
   
@@ -250,14 +249,14 @@ void mostraGrid(){
   desenhar_inimigo();
 }
 
-void desenhaMenu(){
+void desenha_menu(){
   menu.desenhar();
     
-  if(menu.passarEstado()) {
+  if(menu.passar_estado()) {
     estado = Estado.EXPLORACAO;
   }
   
-  menu.sairJogo();
+  menu.sair_jogo();
   
   return;
 }

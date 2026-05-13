@@ -22,33 +22,33 @@ public class Menu{
     text("Jogo do ano!", width / 2, height / 4);
     
   // Botao de iniciar
-    iniciar.desenharBotao();
+    iniciar.desenhar_botao();
     
   // Botao de sair
-    sair.desenharBotao();
+    sair.desenhar_botao();
     
   // Botao para o manual
-    manual.desenharBotao();
+    manual.desenhar_botao();
   }
   
-  public boolean passarEstado(){
-    if(iniciar.clicarBotao())
+  public boolean passar_estado(){
+    if(iniciar.botao_clicado())
       return true;
       
     return false;
   }
   
-  public void sairJogo(){
-   if(sair.clicarBotao()) { exit(); }
+  public void sair_jogo(){
+   if(sair.botao_clicado()) { exit(); }
   }
   
   public class BotaoIniciar extends Botao{
-    BotaoIniciar(float eixoX, float eixoY, float comprimento, float altura, color cor){
-     super(eixoX, eixoY, comprimento, altura, cor); 
+    BotaoIniciar(float eixo_x, float eixo_y, float comprimento, float altura, color cor){
+     super(eixo_x, eixo_y, comprimento, altura, cor); 
     }
     
-    void desenharBotao(){
-      super.desenharBotao();
+    void desenhar_botao(){
+      super.desenhar_botao();
       
       fill(255, 255, 255);
       triangle(eixoX + 2 * comprimento / 5, eixoY + altura / 4,     // Ponto 1
@@ -58,12 +58,12 @@ public class Menu{
   }
   
   public class BotaoSair extends Botao{
-    BotaoSair(float eixoX, float eixoY, float comprimento, float altura, color cor){
-     super(eixoX, eixoY, comprimento, altura, cor); 
+    BotaoSair(float eixo_x, float eixo_y, float comprimento, float altura, color cor){
+     super(eixo_x, eixo_y, comprimento, altura, cor); 
     }
     
-    void desenharBotao(){
-      super.desenharBotao();
+    void desenhar_botao(){
+      super.desenhar_botao();
       
       // X:
       stroke(255);
@@ -75,12 +75,12 @@ public class Menu{
   }
   
   public class BotaoManual extends Botao {
-   BotaoManual(float eixoX, float eixoY, float comprimento, float altura, color cor) {
-     super(eixoX, eixoY, comprimento, altura, cor);
+   BotaoManual(float eixo_x, float eixo_y, float comprimento, float altura, color cor) {
+     super(eixo_x, eixo_y, comprimento, altura, cor);
    }
    
-   void desenharBotao(){
-     super.desenharBotao();
+   void desenhar_botao(){
+     super.desenhar_botao();
      
      fill(255);
      textSize(75);
