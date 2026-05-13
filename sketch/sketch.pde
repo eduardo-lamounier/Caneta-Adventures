@@ -27,8 +27,8 @@ void setup(){
   
   equipe_jogador = new Equipe(
     new PosicaoDTO(14, 10),
-    new Heroi(nivel_heroi, new SapoLanceiro()), 
-    new Heroi(nivel_heroi, new SapoLanceiro()), 
+    new Heroi(nivel_heroi, new CanetaAzul()), 
+    new Heroi(nivel_heroi, new CanetaRoubada()), 
     new Heroi(nivel_heroi, new SapoLanceiro())
   );
   

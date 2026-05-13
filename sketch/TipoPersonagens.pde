@@ -1,6 +1,6 @@
 public class CanetaAzul extends TipoPersonagem {
   public CanetaAzul() {
-    super(3, "Caneta Azul", "Manoel_Guerreiro.png");
+    super(3, "Caneta Azul", "Manoel_guerreiro.png");
   }
   
   @Override
@@ -25,7 +25,7 @@ public class CanetaAzul extends TipoPersonagem {
   
   public class CanetaMagica extends TipoPersonagem {
   public CanetaMagica() {
-    super(4, "Caneta Mágica", ".png");
+    super(4, "Caneta Mágica", "Manoel_mago.png");
   }
   
   @Override
