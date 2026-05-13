@@ -28,6 +28,14 @@ public class Batalha {
   public int get_turno_atual() { return turno_atual; }
   public EstadoTurno get_estado_atual() { return estado_atual; }
 
+  public boolean herois_sairam_vitoriosos() {
+    for(Inimigo inimigo : inimigos) {
+      if(inimigo.esta_vivo())
+        return false;
+    }
+    return true;
+  }
+
   private void ordenar_fila() {
     for(int i = 0; i < 6; i++) {
       int personagem_rapido = i;

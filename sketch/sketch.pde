@@ -53,7 +53,9 @@ void draw(){
 
       if (batalha.deve_finalizar()) {
         estado = Estado.EXPLORACAO;
-        equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
+
+        if(batalha.herois_sairam_vitoriosos())
+          equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
       }
   break;
       
