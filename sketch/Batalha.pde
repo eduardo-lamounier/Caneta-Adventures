@@ -45,6 +45,10 @@ public class Batalha {
     }
   }
   
+  private void desenhar_fundo_batalha() {
+  
+  }
+  
   public boolean deve_finalizar() {
     return false; // IMPLEMENTAR
   }
