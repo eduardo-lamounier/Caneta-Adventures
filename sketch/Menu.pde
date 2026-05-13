@@ -156,7 +156,7 @@ public class Tutorial extends Menu{
 }
 
 public class GameOver extends Menu {
-  private PFont titulo;
+  private PFont titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
   private BotaoReiniciar reiniciar;
   private BotaoMenu voltarMenu;
   private boolean vitoria;
@@ -165,10 +165,9 @@ public class GameOver extends Menu {
   
   public GameOver(boolean vitoria) {
     this.vitoria = vitoria;
-    titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
     
-    reiniciar  = new BotaoReiniciar(width / 6,     height * 3 / 5, 4 * width / 6, height / 7, #BC7920);
-    voltarMenu = new BotaoMenu   (width / 6,     height * 3 / 4 + 10, 4 * width / 6, height / 7, #4A5568);
+    reiniciar  = new BotaoReiniciar(width / 6, height * 1 / 2, 4 * width / 6, height / 7, #BC7920);
+    voltarMenu = new BotaoMenu   (width / 6, height * 41 / 56, 4 * width / 6, height / 7, #4A5568);
   }
   
   @Override
@@ -196,30 +195,10 @@ public class GameOver extends Menu {
     textSize(18);
     text("Nível alcançado: " + equipe_jogador.get_nivel(), width / 2, 245);
     //text("Batalhas vencidas: " + batalhas_vencidas, width / 2, 270);
-  
-    
-    fill(#f5c842);
-    textSize(24);
-    text("O que deseja fazer?", width / 2, 355);
-  
-    fill(255);
-    textSize(18);
-    text("[ ESC ]  Sair do jogo", width / 2, 390);
-    text("[ M ]  Voltar ao menu", width / 2, 415);
-  
     
     fill(180);
     textSize(15);
-    text("Obrigado por jogar!", width / 2, 540);
-
-    // Mensagem
-    fill(255, 200);
-    textSize(24);
-    text(
-      vitoria ? "Parabéns! Você derrotou todos os inimigos." 
-              : "Sua equipe foi derrotada. Tente novamente!",
-      width / 2, height * 2 / 5
-    );
+    text("Obrigado por jogar!", width / 2, 560);
     
     reiniciar.desenhar_botao();
     voltarMenu.desenhar_botao();
