@@ -61,13 +61,21 @@ public class Batalha {
     final int espacamento_y_sprites = 70;
     final int tamanho_sprite = 50;
  
+    final int margem_x_hp = 40;
+    final int comprimento_hp = 150;
+    final int altura_hp = (int)tamanho_sprite * 1/3;
+    final int tamanho_texto_hp = 17;
+    final color cor_fundo_hp = color(#343232);
+    final color cor_texto_hp = color(#ffffff);
+    final color cor_barra_hp = color(#38D30B);
+
     for(int i = 0; i < 3; i++) {
       // desenha sprites: =======================================
 
       image(
         herois[i].get_sprite(),
         margem_x_sprites,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1),
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite,
         tamanho_sprite,
         tamanho_sprite
       );
@@ -86,7 +94,7 @@ public class Batalha {
         image(
           loadImage("death.png"),
           margem_x_sprites,
-          height - margem_y_sprites - espacamento_y_sprites * (3-i-1),
+          height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite,
           tamanho_sprite,
           tamanho_sprite
         );
@@ -101,21 +109,12 @@ public class Batalha {
         );
 
       // desenha barras de hp: =====================================
-      
-      final int margem_x_hp = 40;
-      final int comprimento_hp = 150;
-      final int altura_hp = (int)tamanho_sprite * 1/3;
-      final int tamanho_texto_hp = 17;
-      final color cor_fundo_hp = color(#343232);
-      final color cor_texto_hp = color(#ffffff);
-      final color cor_barra_hp = color(#38D30B);
-
-
+    
       fill(cor_fundo_hp);
       
       rect(
         margem_x_sprites + tamanho_sprite + margem_x_hp,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - altura_hp,
         comprimento_hp,
         altura_hp,
         15
@@ -135,7 +134,7 @@ public class Batalha {
 
       rect(
         margem_x_sprites + tamanho_sprite + margem_x_hp,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - altura_hp,
         (int)comprimento_hp * razao_vida_heroi,
         altura_hp,
         15
@@ -154,12 +153,12 @@ public class Batalha {
       text(
         nf(herois[i].get_vida_atual(), 0, 1) + "/" + nf(herois[i].get_vida_max(), 0, 1) + "hp",
         margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp / 2,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - altura_hp/2
       );
       text(
         nf(inimigos[i].get_vida_atual(), 0, 1) + "/" + nf(inimigos[i].get_vida_max(), 0, 1) + "hp",
         width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp / 2,
-        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i
+        margem_y_sprites + tamanho_sprite - altura_hp + espacamento_y_sprites * i + altura_hp/2
       );
       
       // desenha nível =============================================
@@ -174,7 +173,7 @@ public class Batalha {
       
       circle(
         margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite + altura_hp + raio_nivel,
         raio_nivel
       );
       circle(
@@ -190,7 +189,7 @@ public class Batalha {
       text(
         nivel_herois,
         margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp,
-        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite + altura_hp + raio_nivel
       );
       text(
         nivel_inimigos,
@@ -205,9 +204,9 @@ public class Batalha {
     final int tamanho_ordem_x = 100;
     final int tamanho_ordem_y = 40;
     final int espacamento_ordem_y = 30;
-    final color cor_nao_atacante_heroi = color(#B0C41C);
+    final color cor_nao_atacante_heroi = color(#a0b41b);
     final color cor_atacante_heroi = color(#E4FF1A);
-    final color cor_nao_atacante_inimigo = color(#B9340F);
+    final color cor_nao_atacante_inimigo = color(#B5300b);
     final color cor_atacante_inimigo = color(#ED4618);
     final color cor_morto = color(#a0a0a0);
 
@@ -226,13 +225,17 @@ public class Batalha {
 
       rect(
         (float)margem_ordem,
-        (float)margem_ordem + espacamento_ordem_y * i,
+        (float)margem_ordem + espacamento_ordem_y + i * tamanho_ordem_y,
         (float)tamanho_ordem_x,
         (float)tamanho_ordem_y
       );
 
       fill(#ffffff);
-      text(fila_turnos[i].get_nome(), (float)margem_ordem + tamanho_ordem_x / 2, margem_ordem + espacamento_ordem_y * i + tamanho_ordem_y / 2);
+      text(
+        fila_turnos[i].get_nome(), 
+        (float)margem_ordem + tamanho_ordem_x / 2,
+        (float)margem_ordem + espacamento_ordem_y + i * tamanho_ordem_y + tamanho_ordem_y/2
+      );
     }
 
     // uso de habilidade ==========================================
@@ -297,10 +300,15 @@ public class Batalha {
   
   public void avancar() {
     if (esperando()) return;
+
     if(estado_atual == EstadoTurno.ESCOLHA_HABILIDADE) {
       turno_atual++;
       atacante_atual = (atacante_atual + 1) % 6;
     }
+
+    // no fim de todo turno
+    if(atacante_atual == 6-1)
+      ordenar_fila();
 
     Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
     boolean personagem_atual_heroi =
@@ -356,10 +364,7 @@ public class Batalha {
       case USO_HABILIDADE:
         if (!uso_habilidade_executado) {
           habilidade_escolhida.usar(personagem_atacante_atual, alvo_escolhido);
-
-          if (habilidade_escolhida.altera_velocidade())
-            ordenar_fila();
-
+ 
           uso_habilidade_executado = true;
           iniciar_espera(3000);
         } else {
