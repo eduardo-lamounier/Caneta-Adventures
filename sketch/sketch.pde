@@ -43,6 +43,10 @@ void draw(){
     case MENU:
       desenha_menu();
       break;
+    
+    case TUTORIAL:
+      desenha_tutorial();
+      break;
       
     case EXPLORACAO:
       mostra_grid();
@@ -277,6 +281,9 @@ void desenha_menu(){
   menu.sair_jogo();
 }
 
-void desenha_tutorial() { 
+void desenha_tutorial() {
+  if(tutorial.sair.botao_clicado()) { estado = Estado.MENU; delay(200);}
+  // O delay serve para que o botão de saída do menu não interprete o clicar,
+  // sendo que era do botão do estado de tutorial.
   tutorial.desenhar();
 }

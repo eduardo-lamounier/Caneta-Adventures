@@ -106,6 +106,7 @@ public class Tutorial extends Menu{
     background(#0B132B);
     
     fill(#FFD166);
+    textSize(100);
     textAlign(CENTER);
     text("Como jogar:", width / 2, 80);
     
