@@ -6,7 +6,7 @@ public class Menu{
                                 
   protected BotaoSair sair = new BotaoSair(width * 10 / 11, 0, width / 11, height / 9, #898989);
   
-  protected BotaoManual manual = new BotaoManual(width / 6, height * 3 / 4, 4 * width / 6, height / 6, #BC7920);
+  protected BotaoTutorial tutorial = new BotaoTutorial(width / 6, height * 3 / 4, 4 * width / 6, height / 6, #BC7920);
   
   public void desenhar(){
   // Background:
@@ -28,7 +28,7 @@ public class Menu{
     sair.desenhar_botao();
     
   // Botao para o manual
-    manual.desenhar_botao();
+    tutorial.desenhar_botao();
   }
   
   public boolean passar_estado(){
@@ -40,6 +40,12 @@ public class Menu{
   
   public void sair_jogo(){
    if(sair.botao_clicado()) { exit(); }
+  }
+  
+  public boolean entrar_tutorial() {
+    if(tutorial.botao_clicado()) return true;
+    
+    return false;
   }
   
   public class BotaoIniciar extends Botao{
@@ -74,8 +80,8 @@ public class Menu{
     }
   }
   
-  public class BotaoManual extends Botao {
-   BotaoManual(float eixo_x, float eixo_y, float comprimento, float altura, color cor) {
+  public class BotaoTutorial extends Botao {
+   BotaoTutorial(float eixo_x, float eixo_y, float comprimento, float altura, color cor) {
      super(eixo_x, eixo_y, comprimento, altura, cor);
    }
    
@@ -87,5 +93,32 @@ public class Menu{
      
      text("Como jogar?", eixo_x + (comprimento / 2), eixo_y + (altura * 2 / 3));
    }
+  }
+}
+
+public class Tutorial extends Menu{
+  
+  protected String texto = "Explore o mundo com os canetas azuis e derrote os inimigos!";
+  
+  @Override
+  public void desenhar() { 
+    // Background:
+    background(#0B132B);
+    
+  // Título:
+    fill(#FFD166);
+    
+    textAlign(CENTER, CENTER);
+    textFont(titulo);
+    textSize(100);
+    
+    text("Como jogar:", width / 2, height / 5);
+    
+    fill(255);
+    
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    
+    text(texto, width / 2, height * 2 / 5);
   }
 }
