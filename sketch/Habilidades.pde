@@ -11,7 +11,6 @@ public class Golpear extends Habilidade {
       "Golpear",
       "Infringe o ATK do usuario de dano", 
       0, 
-      false, 
       TipoMiraHabilidade.MIRA_OPONENTE
     );
   }
@@ -30,7 +29,6 @@ public class Estocar extends Habilidade {
       "Estocar", 
       "Infringe o ATK do usuario + 5 x seu multiplicador de dano", 
       2, 
-      false,
       TipoMiraHabilidade.MIRA_OPONENTE
     );
   }
@@ -48,7 +46,6 @@ public class Agilidade extends Habilidade {
       "Agilidade", 
       "Aumenta a velocidade do \n usuário em 10pts base", 
       3, 
-      true,
       TipoMiraHabilidade.NAO_MIRA
     );
   }
@@ -69,7 +66,6 @@ public class BolaFogo extends Habilidade {
       "Bola de fogo", 
       "Infringe 3pts base de dano e 3pts por 3 turnos", 
       5, 
-      false,
       TipoMiraHabilidade.MIRA_OPONENTE
     );
   }
@@ -86,7 +82,6 @@ public class ReporTinta extends Habilidade {
       "Repor Tinta", 
       "Quadriplica o dano no próximo ataque", 
       3, 
-      false,
       TipoMiraHabilidade.NAO_MIRA
     );
   }
@@ -109,7 +104,6 @@ public class Canetada extends Habilidade {
       "Canetada",
       "Causa o ATK do usuario de dano, se for mais rapido + 10.", 
       2, 
-      false,
       TipoMiraHabilidade.MIRA_OPONENTE
     );
   }
@@ -131,7 +125,6 @@ public class CantarOuCompor extends Habilidade {
       "Os dois né. Causa o ATK do usuario de dano, aumenta a velocidade"
         + "10pts e aumenta o multplicador para 2x", 
       4,
-      false,
       TipoMiraHabilidade.MIRA_OPONENTE
     );
   }
@@ -149,7 +142,6 @@ public class Assobiar extends Habilidade {
       "Assobiar", 
       "Cura o alvo com base no ATK do usuário.", 
       2, 
-      true,
       TipoMiraHabilidade.MIRA_ALIADO
     );
   }
