@@ -56,6 +56,8 @@ public class Batalha {
   }
   
   public void desenhar() {
+    noStroke();
+
     final int margem_x_sprites = 50;
     final int margem_y_sprites = 50;
     final int espacamento_y_sprites = 70;
