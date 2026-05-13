@@ -49,7 +49,7 @@ void draw(){
     case BATALHA:
     background(30);
       batalha.avancar();
-      batalha.desenhar_interface();
+      batalha.desenhar();
   
       if (batalha.deve_finalizar())
       estado = Estado.EXPLORACAO;
