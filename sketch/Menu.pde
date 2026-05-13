@@ -176,15 +176,12 @@ public class GameOver extends Menu {
   
     textFont(titulo);
     fill(#e03c3c); // vermelho no lugar do amarelo
-    textSize(72);
+    textSize(120);
     textAlign(CENTER, TOP);
-    text("Game Over", width / 2, 40);
+    text("Game Over", width / 2, height * 1 / 7);
 
     textFont(fonteCorpo);
-    fill(255);
-    textSize(20);
     textAlign(CENTER, TOP);
-    text("Sua equipe foi derrotada...", width / 2, 135);
   
     
     fill(#f5c842);
