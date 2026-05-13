@@ -51,6 +51,7 @@ public class Batalha {
     final int margem_x_hp = 40;
     final int comprimento_hp = 150;
     final int altura_hp = (int)tamanho_sprite * 1/3;
+    final int tamanho_texto_hp = 17;
     final color cor_fundo_hp = color(#343232);
     final color cor_texto_hp = color(#ffffff);
     final color cor_barra_hp = color(#38D30B);
@@ -113,6 +114,68 @@ public class Batalha {
         altura_hp,
         15
       );
+     
+      fill(cor_texto_hp);
+      textSize(tamanho_texto_hp);
+      text(
+        nf(herois[i].get_vida_atual(), 0, 1) + "/" + nf(herois[i].get_vida_max(), 0, 1) + "hp",
+        margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp / 2,
+        height - margem_y_sprites - espacamento_y_sprites * (3-i-1) + tamanho_sprite - altura_hp
+      );
+      text(
+        nf(inimigos[i].get_vida_atual(), 0, 1) + "/" + nf(inimigos[i].get_vida_max(), 0, 1) + "hp",
+        width - margem_x_sprites - tamanho_sprite - margem_x_hp - comprimento_hp / 2,
+        margem_y_sprites + espacamento_y_sprites * i
+      );
+    }
+
+    // ordem de ataque ============================================
+
+    final int margem_ordem = 40;
+    final int tamanho_ordem_x = 100;
+    final int tamanho_ordem_y = 40;
+    final int espacamento_ordem_y = 30;
+    final color cor_nao_atacante_heroi = color(#B0C41C);
+    final color cor_atacante_heroi = color(#E4FF1A);
+    final color cor_nao_atacante_inimigo = color(#B9340F);
+    final color cor_atacante_inimigo = color(#ED4618);
+
+    for(int i = 0; i < 6; i++) {
+      if(atacante_atual == i && (fila_turnos[i] instanceof Heroi)) {
+        fill(cor_atacante_heroi);
+      } else if(atacante_atual != i && (fila_turnos[i] instanceof Heroi)) {
+        fill(cor_nao_atacante_heroi);
+      } else if(atacante_atual == i && !(fila_turnos[i] instanceof Heroi)) {
+        fill(cor_atacante_inimigo);
+      } else {
+        fill(cor_nao_atacante_inimigo);
+      }
+
+      rect(
+        (float)margem_ordem,
+        (float)margem_ordem + espacamento_ordem_y * i,
+        (float)tamanho_ordem_x,
+        (float)tamanho_ordem_y
+      );
+
+      fill(#ffffff);
+      text(fila_turnos[i].get_nome(), (float)margem_ordem + tamanho_ordem_x / 2, margem_ordem + espacamento_ordem_y * i + tamanho_ordem_y / 2);
+    }
+
+    // uso de habilidade ==========================================
+    
+    if(estado_atual == EstadoTurno.USO_HABILIDADE) {
+      final int tamanho_texto_uso_habilidade = 24;
+      final int margem_x_uso_habilidade = width / 2;
+      final int margem_y_uso_habilidade = height / 2;
+
+      textSize(tamanho_texto_uso_habilidade);
+      text(
+        fila_turnos[atacante_atual].get_nome() + " usou " + habilidade_escolhida.get_nome()
+        + " em " + alvo_escolhido.get_nome() + "!!",
+        margem_x_uso_habilidade,
+        margem_y_uso_habilidade
+      );
     }
 
     // seleção de habilidade ou alvos: ============================
@@ -129,7 +192,7 @@ public class Batalha {
       case OBTER_ESCOLHA_ALVO:
         desenhar_botoes(heroi.get_botoes_alvo());
         break;
-    }
+      }
   }
 
   public boolean deve_finalizar() {

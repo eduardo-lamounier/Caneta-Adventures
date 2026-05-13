@@ -10,7 +10,7 @@ public class CanetaAzul extends TipoPersonagem {
   
   @Override
   public float gerar_vida_max(int nivel) {
-    return 55 * nivel;
+    return 100 * nivel;
   }
   
   @Override
@@ -19,7 +19,7 @@ public class CanetaAzul extends TipoPersonagem {
   }
   @Override
   public Habilidade[] gerar_habilidades() {
-    return new Habilidade[] { new Golpear(), new ReporTinta(), new Agilidade() };
+    return new Habilidade[] { new Golpear(), new ReporTinta(), new Assobiar() };
   }
 }
   
@@ -35,7 +35,7 @@ public class CanetaAzul extends TipoPersonagem {
   
   @Override
   public float gerar_vida_max(int nivel) {
-    return 40 * nivel;
+    return 80 * nivel;
   }
   
   @Override
@@ -44,7 +44,7 @@ public class CanetaAzul extends TipoPersonagem {
   }
   @Override
   public Habilidade[] gerar_habilidades() {
-    return new Habilidade[] { new Golpear(), new BolaFogo(), new Agilidade() };
+    return new Habilidade[] { new Golpear(), new CantarOuCompor(), new Agilidade() };
   }
   }
   
@@ -60,7 +60,7 @@ public class CanetaAzul extends TipoPersonagem {
   
   @Override
   public float gerar_vida_max(int nivel) {
-    return 35 * nivel;
+    return 60 * nivel;
   }
   
   @Override
@@ -70,7 +70,7 @@ public class CanetaAzul extends TipoPersonagem {
   
   @Override
   public Habilidade[] gerar_habilidades() {
-    return new Habilidade[] { new Golpear(), new Estocar(), new Agilidade() };
+    return new Habilidade[] { new Golpear(), new Canetada(), new Agilidade() };
   }
 }
 public class SapoLanceiro extends TipoPersonagem {
@@ -111,7 +111,7 @@ public class Demonio extends TipoPersonagem {
   
   @Override
   public float gerar_vida_max(int nivel) {
-    return 80 * nivel;
+    return 70 * nivel;
   }
   
   @Override

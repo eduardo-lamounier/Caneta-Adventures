@@ -6,7 +6,7 @@ public class Golpear extends Habilidade {
   }
   
   public Golpear() {
-    super(1, "Golpear", "Infringe 2pts base de dano", 0, false);
+    super(1, "Golpear", "Infringe o ATK do usuario de dano", 0, false);
   }
 }
 
@@ -18,7 +18,7 @@ public class Estocar extends Habilidade {
   }
 
   public Estocar() {
-    super(2, "Estocar", "Infringe 4pts base de dano", 3, false);
+    super(2, "Estocar", "Infringe o ATK do usuario + 5 x seu multiplicador de dano", 2, false);
   }
 }
 
@@ -43,17 +43,17 @@ public class BolaFogo extends Habilidade {
   }
 
   public BolaFogo() {
-    super(4, "Bola de fogo", "Infringe 3pts base de dano e 3pts por 3 turnos", 6, false);
+    super(4, "Bola de fogo", "Infringe 3pts base de dano e 3pts por 3 turnos", 5, false);
   }
 }
 public class ReporTinta extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
-    usuario.multiplicador_dano = 2;
+    usuario.multiplicador_dano = 4;
   }
   
   public ReporTinta() {
-    super(5, "Repor Tinta", "Dobra o dano no próximo ataque", 4, false);
+    super(5, "Repor Tinta", "Quadriplica o dano no próximo ataque", 3, false);
   }
 }
 public class Canetada extends Habilidade {
@@ -61,7 +61,7 @@ public class Canetada extends Habilidade {
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
     if(usuario.get_vel() > alvo.get_vel()){
-      alvo.ferir(usuario.get_atk() + 10 * usuario.multiplicador_dano);
+      alvo.ferir(usuario.get_atk() + 50 * usuario.multiplicador_dano);
     } else {
       alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
     }
@@ -69,6 +69,31 @@ public class Canetada extends Habilidade {
   }
 
   public Canetada() {
-    super(6, "Canetada", "Se for mais rápido que o alvo, causa 10pts a mais de dano", 3, false);
+    super(6, "Canetada", "Causa o ATK do usuario de dano, se for mais rapido + 10.", 2, false);
+  }
+}
+public class CantarOuCompor extends Habilidade {
+  
+  @Override
+  protected void uso(Personagem usuario, Personagem alvo) {
+    usuario.multiplicador_dano = 2;
+      alvo.ferir(usuario.get_atk() * usuario.multiplicador_dano);
+      usuario.incrementar_vel(10);
+    usuario.multiplicador_dano = 1;
+  }
+
+  public CantarOuCompor() {
+    super(7, "Cantar ou Compor", "Os dois né. Causa o ATK do usuario de dano, aumenta a velocidade 10pts e aumenta o multplicador para 2x", 4, false);
+  }
+}
+public class Assobiar extends Habilidade {
+
+  @Override
+  protected void uso(Personagem usuario, Personagem alvo) {
+    alvo.curar(usuario.get_atk());
+  }
+
+  public Assobiar() {
+    super(8, "Assobiar", "Cura o alvo com base no ATK do usuário.", 2, true);
   }
 }
