@@ -19,7 +19,6 @@ Equipe[] equipe_inimigo;
 
 Batalha batalha;
 Menu menu;
-Tutorial tutorial;
 
 void setup(){
   size(800,600);
@@ -35,17 +34,12 @@ void setup(){
   estado = Estado.MENU;
   inicializa_grid();
   menu = new Menu();
-  tutorial = new Tutorial();
 }
 
 void draw(){
   switch(estado) {
     case MENU:
       desenha_menu();
-      break;
-      
-    case TUTORIAL:
-      desenha_tutorial();
       break;
       
     case EXPLORACAO:
@@ -274,6 +268,4 @@ void desenha_menu(){
 
 void desenha_tutorial() { 
   tutorial.desenhar();
-  
-  if(tutorial.sair.botao_clicado()) { estado = Estado.MENU; delay(400);}
 }
