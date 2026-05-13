@@ -29,7 +29,7 @@ void setup(){
     new PosicaoDTO(14, 10),
     new Heroi(nivel_heroi, new CanetaAzul()), 
     new Heroi(nivel_heroi, new CanetaRoubada()), 
-    new Heroi(nivel_heroi, new SapoLanceiro())
+    new Heroi(nivel_heroi, new CanetaMagica())
   );
   
   estado = Estado.MENU;

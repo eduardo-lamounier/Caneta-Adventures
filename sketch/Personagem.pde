@@ -22,6 +22,10 @@ public abstract class Personagem {
   
   public boolean esta_vivo() { return vida_atual > 0; }
   
+  public void curar(float quantidade) {
+  vida_atual = min(vida_max, vida_atual + quantidade);
+}
+  
   public void ferir(float dano) {
     vida_atual = max(0, vida_atual - dano);
   }
