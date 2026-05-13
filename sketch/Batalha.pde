@@ -219,7 +219,7 @@ public class Batalha {
         fill(cor_atacante_heroi);
       } else if(atacante_atual != i && (fila_turnos[i] instanceof Heroi)) {
         fill(cor_nao_atacante_heroi);
-      } else if(atacante_atual == i && fila_turnos[i] instanceof Inimigo) {
+      } else if(atacante_atual == i && (fila_turnos[i] instanceof Inimigo)) {
         fill(cor_atacante_inimigo);
       } else {
         fill(cor_nao_atacante_inimigo);
