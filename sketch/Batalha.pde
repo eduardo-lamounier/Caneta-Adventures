@@ -15,6 +15,11 @@ public class Batalha {
   private Inimigo[] inimigos;
   private Personagem[] fila_turnos;
  
+  private PImage[] sprites_herois;
+  private PImage[] sprites_inimigos;
+  private PImage sprite_seta_selecao;
+  private PImage sprite_morte;
+ 
   private int turno_atual;
   private EstadoTurno estado_atual;
   
@@ -94,7 +99,7 @@ public class Batalha {
       
       if(!herois[i].esta_vivo())
         image(
-          loadImage("death.png"),
+          sprite_morte,
           margem_x_sprites,
           height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite,
           tamanho_sprite,
@@ -103,7 +108,7 @@ public class Batalha {
 
       if(!inimigos[i].esta_vivo())
         image(
-          loadImage("death.png"),
+          sprite_morte,
           width - margem_x_sprites - tamanho_sprite,
           margem_y_sprites + espacamento_y_sprites * (i),
           tamanho_sprite,
@@ -257,34 +262,68 @@ public class Batalha {
     }
 
     // seleção de habilidade ou alvos: ============================
+    
     if (atacante_atual < 0) return;
     Personagem atacante = fila_turnos[atacante_atual];
 
-    if (!(atacante instanceof Heroi)) return;
-    Heroi heroi = (Heroi) atacante; 
-    
-    BotaoTexto[] botoes_selecao_alvo = heroi.get_botoes_alvo();
-    final int margem_x_seta_alvo = 25;
+    if (atacante instanceof Inimigo) return;
+    Heroi heroi = (Heroi) atacante;
     
     switch (estado_atual) {
       case OBTER_ESCOLHA_HABILIDADE:
         desenhar_botoes(heroi.get_botoes_habilidade());
         break;
       case OBTER_ESCOLHA_ALVO:
-        
-        for(int i = 0; i < 3; i++)
-          if(botoes_selecao_alvo[i].mouse_em_cima())
-            image(
-              loadImage("seta.png"),
-              width - margem_x_sprites - tamanho_sprite - margem_x_hp
-                - comprimento_hp - (tamanho_sprite+10) - margem_x_seta_alvo,
-              margem_y_sprites + espacamento_y_sprites * (i),
-              tamanho_sprite + 10,
-              tamanho_sprite + 10
-            );
-        
-        desenhar_botoes(botoes_selecao_alvo);
+        desenhar_botoes(heroi.get_botoes_alvo());
         break;
+      }
+    
+    // --------------------------------------------------------------------
+    
+    final int margem_x_seta_alvo = 25;
+    final int diferenca_sprites_personagem_e_seta = 10; // personagens tem um sprite 32x32
+                                                        // enquanto a seta é 42x42
+    
+    if(estado_atual != EstadoTurno.OBTER_ESCOLHA_ALVO)
+      return;
+    
+    BotaoTexto[] botoes_selecao_alvo = heroi.get_botoes_alvo();
+    
+    if(habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_ALIADO) {
+      for(int i = 0; i < 3; i++) {
+        if(!botoes_selecao_alvo[i].mouse_em_cima())
+              continue;
+        
+        pushMatrix();
+        translate(
+          margem_x_sprites + margem_x_hp + comprimento_hp + tamanho_sprite
+          + tamanho_sprite + diferenca_sprites_personagem_e_seta + margem_x_seta_alvo,
+          height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite
+        );
+        scale(-1, 1); // espelhamento a seta
+        image(
+          sprite_seta_selecao,
+          tamanho_sprite + diferenca_sprites_personagem_e_seta,
+          0,
+          -(tamanho_sprite + diferenca_sprites_personagem_e_seta),
+          tamanho_sprite + diferenca_sprites_personagem_e_seta
+        );
+        popMatrix(); // reverte o espelhamento
+      }
+    } else
+      for(int i = 0; i < 3; i++) {
+        if(!botoes_selecao_alvo[i].mouse_em_cima())
+              continue;
+        
+        image(
+          sprite_seta_selecao,
+          width - margem_x_sprites - margem_x_hp
+            - comprimento_hp - (tamanho_sprite+diferenca_sprites_personagem_e_seta)
+            - margem_x_seta_alvo + diferenca_sprites_personagem_e_seta - tamanho_sprite,
+          margem_y_sprites + espacamento_y_sprites * (i),
+          tamanho_sprite + diferenca_sprites_personagem_e_seta,
+          tamanho_sprite + diferenca_sprites_personagem_e_seta
+        );
       }
   }
 
@@ -318,17 +357,18 @@ public class Batalha {
     if (esperando()) return;
 
     if(estado_atual == EstadoTurno.ESCOLHA_HABILIDADE) {
-      turno_atual++;
       atacante_atual = (atacante_atual + 1) % 6;
+  
+      if(atacante_atual == 0) {
+        turno_atual++;
+        ordenar_fila();
+      }
     }
-
-    // no fim de todo turno
-    if(atacante_atual == 6-1)
-      ordenar_fila();
 
     Personagem personagem_atacante_atual = fila_turnos[atacante_atual];
     boolean personagem_atual_heroi =
       personagem_atacante_atual instanceof Heroi;
+    boolean habilidade_suporte;
     
     switch(estado_atual) {
       case ESCOLHA_HABILIDADE:
@@ -345,29 +385,28 @@ public class Batalha {
         if (!personagem_atual_heroi) iniciar_espera(1500);
         break;
       case OBTER_ESCOLHA_HABILIDADE:
-        if(!personagem_atual_heroi && !esperando()) {
-          habilidade_escolhida = personagem_atacante_atual.obter_habilidade_escolhida();
-          if(habilidade_escolhida != null) {
-            iniciar_espera(1500);
-            estado_atual = EstadoTurno.ESCOLHA_ALVO;
-          }
-        } else if(personagem_atual_heroi) {
-          habilidade_escolhida = personagem_atacante_atual.obter_habilidade_escolhida();
-          if(habilidade_escolhida != null)
-            estado_atual = EstadoTurno.ESCOLHA_ALVO;
+        habilidade_escolhida = personagem_atacante_atual.obter_habilidade_escolhida();
+        
+        if(habilidade_escolhida == null) return;
+        
+        if(habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.NAO_MIRA) {
+          estado_atual = EstadoTurno.USO_HABILIDADE;
+          alvo_escolhido = null;
+        } else
+          estado_atual = EstadoTurno.ESCOLHA_ALVO;
+        
+        if(!personagem_atual_heroi) {
+          iniciar_espera(1500);
+          return;
         }
         break;
       case ESCOLHA_ALVO:
-        if(habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.NAO_MIRA) {
-          alvo_escolhido = null;
-          estado_atual = EstadoTurno.USO_HABILIDADE;
-          return;
-        }
-
-        Personagem[] alvos_possiveis = personagem_atacante_atual instanceof Heroi ?
-          habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_OPONENTE ? inimigos : herois
+        habilidade_suporte =
+          habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_ALIADO;
+        Personagem[] alvos_possiveis = personagem_atual_heroi ?
+          habilidade_suporte ? herois : inimigos
           :
-          habilidade_escolhida.tipo_de_mira() == TipoMiraHabilidade.MIRA_OPONENTE ? herois : inimigos;
+          habilidade_suporte ? inimigos : herois;
         
         personagem_atacante_atual.escolher_alvo(alvos_possiveis);
         estado_atual = EstadoTurno.OBTER_ESCOLHA_ALVO;
@@ -403,13 +442,23 @@ public class Batalha {
     nivel_herois = herois.get_nivel();
     nivel_inimigos = inimigos.get_nivel();
     fila_turnos = new Personagem[6]; 
+    sprites_herois = new PImage[3];
+    sprites_inimigos = new PImage[3];
+    sprite_seta_selecao = loadImage("seta.png");
+    sprite_morte = loadImage("death.png");
     
     int i = 0;
-    for(Personagem heroi : this.herois) 
-      fila_turnos[i++] = heroi;
+    for(Personagem heroi : this.herois) {
+      fila_turnos[i] = heroi;
+      sprites_herois[i] = heroi.get_sprite();
+      i++;
+    }
     
-    for(Personagem inimigo : this.inimigos)
-      fila_turnos[i++] = inimigo;
+    for(Personagem inimigo : this.inimigos) {
+      fila_turnos[i] = inimigo;
+      sprites_inimigos[i-3] = inimigo.get_sprite();
+      i++;
+    }
     
     ordenar_fila();
   }

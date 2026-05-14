@@ -30,8 +30,8 @@ public abstract class Habilidade {
   public void usar(Personagem usuario, Personagem alvo) {
     assert(cooldown_atual == 0);
     assert(
-      tipo_mira == TipoMiraHabilidade.NAO_MIRA && alvo == null
-      || tipo_mira != TipoMiraHabilidade.NAO_MIRA && alvo != null
+      (tipo_mira == TipoMiraHabilidade.NAO_MIRA && alvo == null)
+      || (tipo_mira != TipoMiraHabilidade.NAO_MIRA && alvo != null)
     );
 
     entrar_em_cooldown();
