@@ -166,7 +166,6 @@ public class Batalha {
       // desenha nível =============================================
    
       final int tamanho_texto_nivel = 14;
-      final int margem_nivel = 20;
       final int raio_nivel = 15;
       final color cor_fundo_nivel = color(#0d0daa);
       final color cor_texto_nivel = color(#ffffff); 
@@ -264,12 +263,27 @@ public class Batalha {
     if (!(atacante instanceof Heroi)) return;
     Heroi heroi = (Heroi) atacante; 
     
+    BotaoTexto[] botoes_selecao_alvo = heroi.get_botoes_alvo();
+    final int margem_x_seta_alvo = 25;
+    
     switch (estado_atual) {
       case OBTER_ESCOLHA_HABILIDADE:
         desenhar_botoes(heroi.get_botoes_habilidade());
         break;
       case OBTER_ESCOLHA_ALVO:
-        desenhar_botoes(heroi.get_botoes_alvo());
+        
+        for(int i = 0; i < 3; i++)
+          if(botoes_selecao_alvo[i].mouse_em_cima())
+            image(
+              loadImage("seta.png"),
+              width - margem_x_sprites - tamanho_sprite - margem_x_hp
+                - comprimento_hp - (tamanho_sprite+10) - margem_x_seta_alvo,
+              margem_y_sprites + espacamento_y_sprites * (i),
+              tamanho_sprite + 10,
+              tamanho_sprite + 10
+            );
+        
+        desenhar_botoes(botoes_selecao_alvo);
         break;
       }
   }
