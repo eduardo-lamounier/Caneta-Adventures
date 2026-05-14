@@ -42,7 +42,7 @@ public class Heroi extends Personagem {
         comprimento,
         altura,
         habilidades[i].get_cooldown() > 0 ?
-          ("["+habilidades[i].get_cooldown()+"] " : "") + habilidades[i].get_nome(),
+          ("["+habilidades[i].get_cooldown()+"] ") : "" + habilidades[i].get_nome(),
         habilidades[i].get_descricao(),
         tamanho_texto,
         habilidades[i].get_cooldown() > 0 ? cor_texto_em_cooldown : cor_texto_fora_cooldown,
