@@ -296,16 +296,16 @@ public class Batalha {
         
         pushMatrix();
         translate(
-          margem_x_sprites + margem_x_hp + comprimento_hp + tamanho_sprite
-          + tamanho_sprite + diferenca_sprites_personagem_e_seta + margem_x_seta_alvo,
+          margem_x_sprites + tamanho_sprite + margem_x_hp + comprimento_hp
+            + margem_x_seta_alvo + (tamanho_sprite),
           height - margem_y_sprites - espacamento_y_sprites * (3-i-1) - tamanho_sprite
         );
         scale(-1, 1); // espelhamento a seta
         image(
           sprite_seta_selecao,
-          tamanho_sprite + diferenca_sprites_personagem_e_seta,
           0,
-          -(tamanho_sprite + diferenca_sprites_personagem_e_seta),
+          0,
+          tamanho_sprite + diferenca_sprites_personagem_e_seta,
           tamanho_sprite + diferenca_sprites_personagem_e_seta
         );
         popMatrix(); // reverte o espelhamento
