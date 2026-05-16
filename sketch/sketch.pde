@@ -10,7 +10,7 @@ int m = 20; // Número de colunas do grid
 
 Equipe equipe_jogador;
 
-int quant_inimigo = 5;
+int quant_inimigo;
 PImage[] imagens_inimigos;
 PosicaoDTO[] pos_inimigos; 
 // Linhas e colunas onde os inimigos estão
@@ -20,6 +20,9 @@ Batalha batalha;
 Menu menu;
 Tutorial tutorial;
 GameOver tela_final;
+
+Direcao direcao_colisao = null;
+boolean agente_colisao; // Se for true é heroi, se não, é inimigo
 
 void setup(){
   size(800,600);
@@ -100,9 +103,14 @@ void movimentar_heroi(){
       return;
   }
   
-  if(equipe_jogador.movimentar(direcao, grid, n, m)) { colisao(); }
-  // Como que para verificar executa a função, 
-  // tem que ser executada apenas uma vez.
+  if(equipe_jogador.movimentar(direcao, grid, n, m)) { 
+    direcao_colisao = direcao;
+    agente_colisao = true;
+    
+    colisao();
+  }
+  // Na prórpia verificação, já executa o comando de movimentação
+  // Então chamamos a função apenas na verificação
 }
 
 void movimentar_inimigo(){
@@ -132,7 +140,12 @@ void movimentar_inimigo(){
        throw new RuntimeException("Deu errado, no sorteio de movimentação!");
   }
   
-  if(equipe_inimigo[i].movimentar(direcao, grid, n, m)) { colisao(); }
+    if(equipe_inimigo[i].movimentar(direcao, grid, n, m)) {
+      direcao_colisao = direcao;
+      agente_colisao = false;
+      
+      colisao(); 
+    }
   }
 }
 
@@ -158,15 +171,61 @@ void colisao(){
   int nivel_inimigos = (int)random(nivel_inimigo_min, nivel_inimigo_max+1);
   
   int xp = (int)random(75, 150+1);
+  
+  int indice = descobri_inimigo();
 
-  Equipe inimigos = new Equipe(
-    equipe_jogador.get_posicao(),
+  equipe_inimigo[indice] = new Equipe(
+    equipe_inimigo[indice].get_posicao(),
     inimigo_aleatorio(nivel_inimigos),
     inimigo_aleatorio(nivel_inimigos),
     inimigo_aleatorio(nivel_inimigos)
   );
   
-  batalha = new Batalha(equipe_jogador, inimigos, xp);
+  batalha = new Batalha(equipe_jogador, equipe_inimigo[indice], xp);
+}
+
+int descobri_inimigo() {
+  int pos_x = 0, pos_y = 0;
+  
+  switch(direcao_colisao) {
+    case CIMA:
+      pos_x = -1;
+      pos_y = 0;
+      break;
+      
+    case ESQUERDA:
+      pos_x = 0;
+      pos_y = -1;
+      break;
+      
+    case BAIXO:
+      pos_x = 1;
+      pos_y = 0;
+      break;
+      
+    case DIREITA:
+      pos_x = 0;
+      pos_y = 1;
+      break;
+      
+    default:
+       throw new RuntimeException("Deu errado, na direcao da colisao");
+  }
+  
+  if(!agente_colisao) { pos_x *= -1; pos_y *= -1; } // Muda para a vista do inimigo
+  
+  if(grid[equipe_jogador.posicao.x + pos_x][equipe_jogador.posicao.y + pos_y] == Celula.INIMIGO) {
+    for(int i = 0; i < quant_inimigo; i++) {
+      if(equipe_inimigo[i].posicao.x == equipe_jogador.posicao.x + pos_x &&
+         equipe_inimigo[i].posicao.y == equipe_jogador.posicao.y + pos_y) {
+           return i;
+      }
+    }
+  }
+  
+  else {  throw new RuntimeException("Deu errado, na descorbeta do indice do inimigo"); }
+  
+  return quant_inimigo + 1; // Se retornar aqui é porque deu erro
 }
 
 void desenhar_heroi(){
@@ -183,19 +242,35 @@ void desenhar_inimigo(){
   float h = height/(float)n;
   
   for(int i = 0; i < quant_inimigo; i++) {
-        image(imagens_inimigos[i], int(pos_inimigos[i].y) * l, int(pos_inimigos[i].x) * h, l, h);
+        image(imagens_inimigos[i], equipe_inimigo[i].posicao.y * l, equipe_inimigo[i].posicao.x * h, l, h);
   }
   
   movimentar_inimigo();
+}
+
+void inimigo_derrotado(int indice){
+  Equipe temp;
+  
+  for(int i = indice; i < quant_inimigo - 1; i++) {
+    temp = equipe_inimigo[i];
+    equipe_inimigo[i] = equipe_inimigo[i + 1];
+    equipe_inimigo[i + 1] = temp;
+  } 
+  
+  grid[equipe_inimigo[quant_inimigo - 1].posicao.x][equipe_inimigo[quant_inimigo - 1].posicao.y] = Celula.GRAMA;
+  
+  quant_inimigo--;
 }
 
 void inicializa_grid(){
   imagens_grid = new PImage[n][m];
   grid = new Celula[n][m];
   
+  quant_inimigo = 5;
   pos_inimigos = new PosicaoDTO[quant_inimigo];
   imagens_inimigos = new PImage[quant_inimigo];
   equipe_inimigo = new Equipe[quant_inimigo];
+  
   
   equipe_jogador = new Equipe(
     new PosicaoDTO(14, 10),
@@ -226,7 +301,7 @@ void inicializa_grid(){
   for(int i = 0; i < quant_inimigo; i++){
     pos_inimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
     
-    if(grid[int(pos_inimigos[i].x)][int(pos_inimigos[i].y)] != Celula.GRAMA) { 
+    if(grid[pos_inimigos[i].x][pos_inimigos[i].y] != Celula.GRAMA) { 
       i--; }  
     
     else {
@@ -237,7 +312,7 @@ void inicializa_grid(){
         inimigo_aleatorio(1)
       );
       
-      grid[int(pos_inimigos[i].x)][int(pos_inimigos[i].y)] = Celula.INIMIGO; 
+      grid[pos_inimigos[i].x][pos_inimigos[i].y] = Celula.INIMIGO; 
       imagens_inimigos[i] = loadImage("inimigo" + str(int(random(1, 2+1))) + ".png");
     }
   }
@@ -295,6 +370,8 @@ void desenha_batalha() {
       estado = Estado.FINAL;
       return;
     }
+    
+    inimigo_derrotado(descobri_inimigo());
     
     equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
     
