@@ -305,10 +305,7 @@ void desenha_batalha() {
 void desenha_final(){
   tela_final.desenhar();
   
-  if(tela_final.voltar_menu()) { 
-    estado = Estado.MENU; 
-    delay(190);
-  }
+  if(tela_final.sair_game()) { exit(); }
   
   if(tela_final.reiniciar_jogo()) { 
     reinicia_grid(); 

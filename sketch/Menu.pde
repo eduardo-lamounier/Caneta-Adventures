@@ -158,7 +158,7 @@ public class Tutorial extends Menu{
 public class GameOver extends Menu {
   private PFont titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
   private BotaoReiniciar reiniciar;
-  private BotaoMenu voltarMenu;
+  private BotaoSair sair;
   private boolean vitoria;
   
   protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
@@ -167,7 +167,7 @@ public class GameOver extends Menu {
     this.vitoria = vitoria;
     
     reiniciar  = new BotaoReiniciar(width / 6, height * 1 / 2, 4 * width / 6, height / 7, #BC7920);
-    voltarMenu = new BotaoMenu   (width / 6, height * 41 / 56, 4 * width / 6, height / 7, #4A5568);
+    sair = new BotaoSair   (width / 6, height * 41 / 56, 4 * width / 6, height / 7, #4A5568);
   }
   
   @Override
@@ -198,15 +198,15 @@ public class GameOver extends Menu {
     text("Obrigado por jogar!", width / 2, 560);
     
     reiniciar.desenhar_botao();
-    voltarMenu.desenhar_botao();
+    sair.desenhar_botao();
   }
   
   public boolean reiniciar_jogo() {
     return reiniciar.botao_clicado();
   }
   
-  public boolean voltar_menu() {
-    return voltarMenu.botao_clicado();
+  public boolean sair_game() {
+    return sair.botao_clicado();
   }
   
   // ── Botões internos ──────────────────────────────────────────────
@@ -224,8 +224,8 @@ public class GameOver extends Menu {
     }
   }
   
-  public class BotaoMenu extends Botao {
-    BotaoMenu(float eixo_x, float eixo_y, float comprimento, float altura, color cor) {
+  public class BotaoSair extends Botao {
+    BotaoSair(float eixo_x, float eixo_y, float comprimento, float altura, color cor) {
       super(eixo_x, eixo_y, comprimento, altura, cor);
     }
     void desenhar_botao() {
@@ -233,7 +233,7 @@ public class GameOver extends Menu {
       fill(255);
       textAlign(CENTER, CENTER);
       textSize(36);
-      text("⌂  Menu principal", eixo_x + comprimento / 2, eixo_y + altura / 2);
+      text("⌂  Sair", eixo_x + comprimento / 2, eixo_y + altura / 2);
     }
   }
 }
