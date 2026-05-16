@@ -9,7 +9,6 @@ int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 
 Equipe equipe_jogador;
-int nivel_heroi = 1;
 
 int quant_inimigo = 5;
 PImage[] imagens_inimigos;
@@ -25,13 +24,6 @@ GameOver tela_final;
 void setup(){
   size(800,600);
   frameRate(60);
-  
-  equipe_jogador = new Equipe(
-    new PosicaoDTO(14, 10),
-    new Heroi(nivel_heroi, new CanetaAzul()), 
-    new Heroi(nivel_heroi, new CanetaRoubada()), 
-    new Heroi(nivel_heroi, new CanetaMagica())
-  );
   
   estado = Estado.MENU;
   inicializa_grid();
@@ -55,17 +47,8 @@ void draw(){
       break;
     
     case BATALHA:
-      background(30);
-      batalha.avancar();
-      batalha.desenhar();
-
-      if (batalha.deve_finalizar()) {
-        estado = Estado.EXPLORACAO;
-
-        if(batalha.herois_sairam_vitoriosos())
-          equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
-      }
-  break;
+      desenha_batalha();
+      break;
       
     case FINAL:
       desenha_final();
@@ -214,25 +197,31 @@ void inicializa_grid(){
   imagens_inimigos = new PImage[quant_inimigo];
   equipe_inimigo = new Equipe[quant_inimigo];
   
+  equipe_jogador = new Equipe(
+    new PosicaoDTO(14, 10),
+    new Heroi(1, new CanetaAzul()), 
+    new Heroi(1, new CanetaRoubada()), 
+    new Heroi(1, new CanetaMagica())
+  );
+  
+  grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = Celula.HEROI;
+  imagens_grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+  
   for(int i = 0; i < n; i++) {
     for(int j = 0; j < m; j++) {
-      if(random(1) >= 0.1){
-        imagens_grid[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
-        grid[i][j] = Celula.GRAMA;
-      }
-      
-      else {
-        if(i != equipe_jogador.posicao.x || j != equipe_jogador.posicao.y) {
+      if(grid[i][j] != Celula.HEROI) {
+        if(random(1) >= 0.1){
+          imagens_grid[i][j] = loadImage("grama-" + (int)random(1, 2+1) + ".png");
+          grid[i][j] = Celula.GRAMA;
+        }
+        
+        else {
           imagens_grid[i][j] = loadImage("pedra.png");
           grid[i][j] = Celula.PEDRA;
         }
-        
-        else { j--; }
       }
     }                
   }
-  
-  grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = Celula.HEROI;
   
   for(int i = 0; i < quant_inimigo; i++){
     pos_inimigos[i] = new PosicaoDTO(int(random(n)), int(random(m)));
@@ -296,17 +285,34 @@ void desenha_tutorial() {
   tutorial.desenhar();
 }
 
+void desenha_batalha() {
+  background(30);
+  batalha.avancar();
+  batalha.desenhar();
+
+  if (batalha.deve_finalizar()) {
+    if (!batalha.herois_sairam_vitoriosos()) {
+      estado = Estado.FINAL;
+      return;
+    }
+    
+    equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
+    
+    estado = Estado.EXPLORACAO;
+  }
+}
+
 void desenha_final(){
   tela_final.desenhar();
   
-  if( tela_final.voltar_menu()) { 
+  if(tela_final.voltar_menu()) { 
     estado = Estado.MENU; 
     delay(190);
   }
   
-  if( tela_final.reiniciar_jogo()) { 
+  if(tela_final.reiniciar_jogo()) { 
     reinicia_grid(); 
-    estado = Estado.EXPLORACAO;
+    estado = Estado.MENU;
     delay(200); // Para que o clique no botão não influêncie no outro.
   }
 }
