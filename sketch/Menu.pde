@@ -155,7 +155,7 @@ public class Tutorial extends Menu{
     }
 }
 
-public class GameOver extends Menu {
+public class TelaFinal extends Menu {
   private PFont titulo = loadFont("BerlinSansFBDemi-Bold-48.vlw");
   private BotaoReiniciar reiniciar;
   private BotaoSair sair;
@@ -163,7 +163,7 @@ public class GameOver extends Menu {
   
   protected PFont fonteCorpo = loadFont("Amiri-Regular-48.vlw");
   
-  public GameOver(boolean vitoria) {
+  TelaFinal(boolean vitoria) {
     this.vitoria = vitoria;
     
     reiniciar  = new BotaoReiniciar(width / 6, height * 1 / 2, 4 * width / 6, height / 7, #BC7920);
@@ -171,11 +171,53 @@ public class GameOver extends Menu {
   }
   
   @Override
-    void desenhar() {
+  public void desenhar() {
     background(#0d1b3e);
   
     textFont(titulo);
-    fill(#e03c3c); // vermelho no lugar do amarelo
+    textSize(120);
+    textAlign(CENTER, TOP);
+    
+    if(vitoria) { 
+      fill(#34CB17); 
+      text("Victory!!!", width / 2, height * 1 / 7); 
+    }
+      
+    else { 
+      fill(#e03c3c); 
+      text("Game Over", width / 2, height * 1 / 7); 
+    }
+
+    textFont(fonteCorpo);
+    textAlign(CENTER, TOP);
+  
+    
+    fill(#f5c842);
+    textSize(24);
+    text("Resumo da partida", width / 2, 210);
+  
+    fill(255);
+    textSize(18);
+    text("Nível alcançado: " + equipe_jogador.get_nivel(), width / 2, 245);
+    //text("Batalhas vencidas: " + batalhas_vencidas, width / 2, 270);
+    
+    fill(180);
+    textSize(15);
+    text("Obrigado por jogar!", width / 2, 560);
+    
+    reiniciar.desenhar_botao();
+    sair.desenhar_botao();
+  }
+  
+  public void desenhar_vitoria() {
+    
+  }
+  
+  public void desenhar_derrota() {
+    background(#0d1b3e);
+  
+    textFont(titulo);
+    fill(#e03c3c); 
     textSize(120);
     textAlign(CENTER, TOP);
     text("Game Over", width / 2, height * 1 / 7);

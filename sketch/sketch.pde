@@ -19,7 +19,7 @@ Equipe[] equipe_inimigo;
 Batalha batalha;
 Menu menu;
 Tutorial tutorial;
-GameOver tela_final;
+TelaFinal tela_final;
 
 Direcao direcao_colisao = null;
 boolean agente_colisao; // Se for true é heroi, se não, é inimigo
@@ -32,7 +32,7 @@ void setup(){
   inicializa_grid();
   menu = new Menu();
   tutorial = new Tutorial();
-  tela_final = new GameOver(true);
+  tela_final = new TelaFinal(false);
 }
 
 void draw(){
@@ -376,6 +376,11 @@ void desenha_batalha() {
     equipe_jogador.ganhar_xp(batalha.get_xp_vitoria());
     
     estado = Estado.EXPLORACAO;
+    
+    if(quant_inimigo <= 0) { 
+      estado = Estado.FINAL; 
+      tela_final = new TelaFinal(true); 
+    }
   }
 }
 
@@ -387,6 +392,7 @@ void desenha_final(){
   if(tela_final.reiniciar_jogo()) { 
     reinicia_grid(); 
     estado = Estado.MENU;
+    tela_final = new TelaFinal(false);
     delay(200); // Para que o clique no botão não influêncie no outro.
   }
 }
