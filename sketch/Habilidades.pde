@@ -133,7 +133,8 @@ public class Assobiar extends Habilidade {
 
   @Override
   protected void uso(Personagem usuario, Personagem alvo) {
-    alvo.curar(usuario.get_atk());
+    final int cura_minima = 5;
+    alvo.curar(cura_minima + usuario.get_atk());
   }
 
   public Assobiar() {
