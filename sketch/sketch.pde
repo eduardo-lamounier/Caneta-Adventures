@@ -9,6 +9,7 @@ int n = 15; // Número de linhas do grid
 int m = 20; // Número de colunas do grid
 
 Equipe equipe_jogador;
+int nivel_heroi;
 
 int quant_inimigo;
 PImage[] imagens_inimigos;
@@ -271,12 +272,12 @@ void inicializa_grid(){
   imagens_inimigos = new PImage[quant_inimigo];
   equipe_inimigo = new Equipe[quant_inimigo];
   
-  
+  nivel_heroi = 1;
   equipe_jogador = new Equipe(
     new PosicaoDTO(14, 10),
-    new Heroi(1, new CanetaAzul()), 
-    new Heroi(1, new CanetaRoubada()), 
-    new Heroi(1, new CanetaMagica())
+    new Heroi(nivel_heroi, new CanetaAzul()), 
+    new Heroi(nivel_heroi, new CanetaRoubada()), 
+    new Heroi(nivel_heroi, new CanetaMagica())
   );
   
   grid[equipe_jogador.posicao.x][equipe_jogador.posicao.y] = Celula.HEROI;
@@ -381,6 +382,15 @@ void desenha_batalha() {
       estado = Estado.FINAL; 
       tela_final = new TelaFinal(true); 
     }
+    
+    nivel_heroi = equipe_jogador.get_nivel();
+    
+    equipe_jogador = new Equipe(
+      equipe_jogador.get_posicao(),
+      new Heroi(nivel_heroi, new CanetaAzul()), 
+      new Heroi(nivel_heroi, new CanetaRoubada()), 
+      new Heroi(nivel_heroi, new CanetaMagica())
+    );
   }
 }
 
