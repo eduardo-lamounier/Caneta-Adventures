@@ -251,11 +251,16 @@ void desenhar_inimigo(){
 
 void inimigo_derrotado(int indice){
   Equipe temp;
+  PImage image_temp;
   
   for(int i = indice; i < quant_inimigo - 1; i++) {
     temp = equipe_inimigo[i];
     equipe_inimigo[i] = equipe_inimigo[i + 1];
     equipe_inimigo[i + 1] = temp;
+    
+    image_temp = imagens_inimigos[i];
+    imagens_inimigos[i] = imagens_inimigos[i + 1];
+    imagens_inimigos[i] = image_temp;
   } 
   
   grid[equipe_inimigo[quant_inimigo - 1].posicao.x][equipe_inimigo[quant_inimigo - 1].posicao.y] = Celula.GRAMA;
